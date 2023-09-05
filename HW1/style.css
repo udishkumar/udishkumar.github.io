@@ -1,0 +1,103 @@
+h1{
+    color: #0f35af;
+    margin-left: 50px;
+    font-family: 'Rozha One', serif;
+    font-size: 30pt;
+    margin-bottom: inherit;
+}
+
+.hr-div{
+    background-color: black;
+    height: 1px;
+    width: 1170px;
+    transform: translateX(-50px);
+}
+
+.menu-items {
+    margin-left: 50px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    display: flex;
+    gap: 20px;
+  }
+
+.menu-item{
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 100;
+    white-space: nowrap;
+}
+#home{
+    color:#052784;
+}
+
+
+.parallax-main {
+    background-image: url('./assets/images/Cutlery.png');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    height: 500px;
+    position: relative;
+    max-width: 1000px;
+    margin-left: 50px;
+}
+
+.parallax-text {
+    position: absolute;
+    font-size: 40pt;
+    margin-left: 45px;
+    margin-top: 55px;
+    font-weight: 600;
+    font-family: 'Times New Roman', Times, serif;
+    color: #0f35af;
+    white-space: nowrap;
+  }
+
+.parallax-button {
+    position: absolute;
+    border: none;
+    height: 50px;
+    width: 117px;
+    background-color: white;
+    margin-left: 50px;
+    margin-top: 230px;
+    padding: 0px 0px;
+    font-family: Arial, sans-serif;
+    font-size: 12pt;
+  }
+
+.after-parallax-text{
+    position: absolute;
+    font-weight: 600;
+    font-family: 'Rozha One', serif;
+    margin-top: 70px;
+    margin-left: 330px;
+    white-space: nowrap;
+    font-size: 25pt; 
+    color: #0f35af;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    width: 1000px;
+    margin-left: 50px;
+    margin-top: 152px;
+    
+  }
+
+.grid-item img {
+    width: 100%; /* Ensures the image takes the full width of its container */
+    height: auto; /* Maintains the aspect ratio of the image */
+}
+
+.grid-item p {
+    text-align: center;
+    margin-top: 40px;
+    font-family: 'Rozha One', serif;
+    font-weight: 900;
+    color: #0f35af;
+    margin-bottom: 45px;
+    font-size: 14pt;
+  }
