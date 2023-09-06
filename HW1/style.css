@@ -1,9 +1,9 @@
 h1{
     color: #0f35af;
     margin-left: 50px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 20pt;
-    margin-bottom: 25px;
+    font-family: 'Times New Roman', serif;
+    font-size: 30pt;
+    margin-bottom: 20px;
 }
 
 .hr-div{
@@ -40,17 +40,16 @@ h1{
     height: 590px;
     width: 1000px;
     margin-left: 50px;
-    background-position: 10px -108px;
+    background-position: 10px -76px;
   }
 
   .parallax-text {
     position: absolute;
-    font-size: 37pt;
+    font-size: 42pt;
     margin-left: 45px;
-    margin-top: 60px;
+    margin-top: 56px;
     font-weight: 600;
     font-family: 'Times New Roman', serif;
-    font-family: Georgia, 'Times New Roman', Times, serif;
     color: #0f35af;
     white-space: nowrap;
   }
