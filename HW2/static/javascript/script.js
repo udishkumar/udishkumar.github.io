@@ -5,7 +5,8 @@ let currentSearchResults = null;
 let currentSearchKeyword = "";
 let currentSearchCount = 0;
 let mainDiv = document.getElementById('mainDiv');
-
+let formattedProductPrice=0
+let formattedShippingCost=0
 document.getElementById("searchForm").addEventListener("submit", function(event) {
     event.preventDefault();
     logWithUUID("Fetching form data... and preventing default form validation")
@@ -176,12 +177,14 @@ function displayResults(data, keyword, productCount) {
         }
     
         let priceDiv = document.createElement('div');
+        formattedProductPrice = formatToOneDecimal(product.product_price);
+        formattedShippingCost = formatToOneDecimal(product.shipping_cost);
 
         if (product.shipping_cost != "") {
-            priceDiv.innerHTML = `<b>Price: $${product.product_price} (+ $${product.shipping_cost} for shipping)</b>`;
+            priceDiv.innerHTML = `<b>Price: $${formattedProductPrice} (+ $${formattedShippingCost} for shipping)</b>`;
             logWithUUID('fetched product cost including shipping cost for product id: '+product.product_id);
         } else {
-            priceDiv.innerHTML = `<b>Price: $${product.product_price}</b>`;
+            priceDiv.innerHTML = `<b>Price: $${formattedProductPrice}</b>`;
             logWithUUID('fetched product cost only for product id: '+product.product_id);
         }
 
@@ -359,7 +362,16 @@ function logWithUUID(message) {
     console.log(`[ID:${id}] ${message}`);
 }
 
-logWithUUID("This is a message");
+function formatToOneDecimal(value) {
+    if (typeof value === "string") {
+        value = parseFloat(value);
+    }
+    if (Number.isInteger(value)) {
+        return value.toFixed(1);
+    }
+    return value.toString();
+}
+
 
 document.getElementById('clearBtn').addEventListener('click', () => {
     logWithUUID('Reset form to default values');
