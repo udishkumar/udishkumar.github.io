@@ -113,10 +113,8 @@ function displayResults(data, keyword, productCount) {
     if (prevOutput) {
         prevOutput.remove();
     }
-
     let outputDiv = document.createElement('div');
     outputDiv.className = "output";
-
     let heading = document.createElement('h2');
     heading.className = "results-found-heading";
     heading.innerHTML = `${productCount} Results found for <i>${keyword}</i>`;
@@ -138,7 +136,7 @@ function displayResults(data, keyword, productCount) {
         let imgDiv = document.createElement('div');
         imgDiv.className = 'product-image';
         let img = document.createElement('img');
-        img.src = product.product_image || "./static/styles/images/ebay_default.jpg";
+        img.src = product.product_image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUaY8AD_x6kRMw6dHReqBbsbiCIo_hNKv4AOVphg67lw&s";
         imgDiv.appendChild(img);
         
         let detailsDiv = document.createElement('div');

@@ -176,16 +176,18 @@ def get_ebay_data_by_id(item_id):
             }
         }), 400
 
-    item = response_data["Item"]
+    item = response_data.get("Item", {})    
     item_specifics = [
         {
             "Name": nv.get("Name", ""),
             "Value": nv["Value"][0] if isinstance(nv.get("Value", None), list) else nv.get("Value", "")
         } for nv in item.get("ItemSpecifics", {}).get("NameValueList", [])
     ]
+
+    product_image = item.get("PictureURL", [])
     ebay_response = {
         "product_id": item.get("ItemID", ""),
-        "product_image": item.get("PictureURL", ["./static/styles/images/ebay_default.jpg"])[0],
+        "product_image": product_image[0] if product_image else "https://ir.ebaystatic.com/cr/v/c1/2018/flashCpn/social-share-default.jpg",
         "product_url": item.get("ViewItemURLForNaturalSearch", ""),
         "product_name": item.get("Title", ""),
         "product_price": f"{item.get('CurrentPrice', {}).get('Value', '')} {item.get('CurrentPrice', {}).get('CurrencyID', '')}",
