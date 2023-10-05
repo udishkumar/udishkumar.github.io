@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HW2</title>
+    <link rel="stylesheet" type= "text/css"  href="{{ url_for('static', filename= 'styles/style.css') }}">
+</head>
+<body>
+    <div id="mainDiv">
+        <div class="logoDiv">
+            <a href="https://www.ebay.com" target="_blank" rel="noopener noreferrer">
+                <img id="ebaylogo" src="{{ url_for('static', filename= 'styles/images/eBayLogo.png') }}" alt="eBay Logo">
+            </a>
+            <h1 id="shoppingheading">Shopping</h1>
+        </div>    
+        <div class="tableDiv">
+            <form id="searchForm">
+                <table class="table">
+                    <tr>
+                        <td>
+                            <div class="adjDiv0" id="keywords-label">Keywords<span class="mandatory">*</span>:</div>
+                            <div class="adjDiv0" id="keywords-text"><input type="text" id="keyword-text" required/></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="adjDiv1" id="priceRange">Price Range:</div>
+                            <div class="adjDiv1" id="from">From</div>
+                            <div class="adjDiv1" class="minmax" id="minPrice"><input id="minId" type="number" class="txt1" /></div>
+                            <div class="adjDiv1" id="to">to</div>
+                            <div class="adjDiv1" class="minmax" id="maxPrice"><input id="maxId" type="number" class="txt1"/></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="adjDiv2" id="condition">Condition:</div>
+                            <div class="adjDiv2"><input type="checkbox" id="new"/></div>
+                            <div class="adjDiv2">New</div>
+                            <div class="adjDiv2"><input type="checkbox" id="used"/></div>
+                            <div class="adjDiv2">Used</div>
+                            <div class="adjDiv2"><input type="checkbox" id="veryGood"/></div>
+                            <div class="adjDiv2">Very Good</div>
+                            <div class="adjDiv2"><input type="checkbox" id="good"/></div>
+                            <div class="adjDiv2">Good</div>
+                            <div class="adjDiv2"><input type="checkbox" id="acceptable"/></div>
+                            <div class="adjDiv2">Acceptable</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="adjDiv3" id="seller">Seller:</div>
+                            <div class="adjDiv3"><input type="checkbox" id="returnAccepted"/></div>
+                            <div class="adjDiv3">Return Accepted</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="adjDiv4" id="shipping">Shipping:</div>
+                            <div class="adjDiv4"><input type="checkbox" id="freeShipping"/></div>
+                            <div class="adjDiv4">Free</div>
+                            <div class="adjDiv4"><input type="checkbox" id="expeditedShipping"/></div>
+                            <div class="adjDiv4">Expedited</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="adjDiv5" id="sortByTxt">Sort by:</div>
+                            <div class="adjDiv5">
+                                <select id="sortBy">
+                                    <option id="BM" selected><b>Best Match</b></option>
+                                    <option id="PHF"><b>Price: highest first</b></option>
+                                    <option id="BSHF"><b>Price + Shipping: highest first</b></option>
+                                    <option id="PSLF"><b>Price + Shipping: lowest first</b></option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="adjDiv6"><button id="clearBtn" type="reset">Clear</button></div>
+                            <div class="adjDiv6"><button id="searchBtn" type="submit">Search</button></div>
+                        </td>
+                    </tr>
+                </table>      
+            </form>
+        </div>
+    </div>  
+<script src="{{ url_for('static', filename= 'javascript/script.js') }}"></script>
+</body>
+</html>
