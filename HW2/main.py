@@ -25,7 +25,6 @@ def get_ebay_data():
         "RESPONSE-DATA-FORMAT": "JSON",
         "REST-PAYLOAD": "true",
         "keywords": keywords
-        # "paginationInput.entriesPerPage": "100",
     }
 
     sortOrder = request.args.get('sortOrder')
