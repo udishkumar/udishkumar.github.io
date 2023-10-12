@@ -38,30 +38,57 @@ function validatePriceRange() {
 
 
 function fetchDataFromEbay() {
-    logWithUUID("Ebay data fetch request initiated...")
+    logWithUUID("Ebay data fetch request initiated...");
     let xhr = new XMLHttpRequest();
-    keywords = document.getElementById('keyword-text').value;
-    if(keywords!= ""){
+    
+    let keywords = document.getElementById('keyword-text').value;
+    if(keywords != "") {
         let selectedOptionId = document.querySelector('#sortBy option:checked').id;
-    let sortOrderMap = {
-        'BM': 'BestMatch',
-        'PHF': 'CurrentPriceHighest',
-        'BSHF': 'PricePlusShippingHighest',
-        'PSLF': 'PricePlusShippingLowest'
-    };
-    let sortOrder = sortOrderMap[selectedOptionId];
-    let returnsAcceptedOnly = document.getElementById('returnAccepted').checked;
-    let conditions = [
-        { id: 'new', value: 1000 },
-        { id: 'used', value: 3000 },
-        { id: 'veryGood', value: 4000 },
-        { id: 'good', value: 5000 },
-        { id: 'acceptable', value: 6000 },
-    ];
+        let sortOrderMap = {
+            'BM': 'BestMatch',
+            'PHF': 'CurrentPriceHighest',
+            'BSHF': 'PricePlusShippingHighest',
+            'PSLF': 'PricePlusShippingLowest'
+        };
+        let sortOrder = sortOrderMap[selectedOptionId];
+        let returnsAcceptedOnly = document.getElementById('returnAccepted').checked;
+        let conditions = [
+            { id: 'new', value: 1000 },
+            { id: 'used', value: 3000 },
+            { id: 'veryGood', value: 4000 },
+            { id: 'good', value: 5000 },
+            { id: 'acceptable', value: 6000 },
+        ];
 
-    let conditionValues = conditions.filter(cond => document.getElementById(cond.id).checked).map(cond => cond.value);
+        let conditionValues = conditions.filter(cond => document.getElementById(cond.id).checked).map(cond => cond.value);
+        let freeShippingOnly = document.getElementById('freeShipping').checked;
 
-    let apiUrl = `https://myfirstpython-3979650766.wl.r.appspot.com/getEbayData?minPrice=${minPriceValue}&maxPrice=${maxPriceValue}&ReturnsAcceptedOnly=${returnsAcceptedOnly}&condition=${conditionValues.join(',')}&keywords=${keywords}&sortOrder=${sortOrder}`;
+        let params = [];
+        
+        if (!isNaN(minPriceValue) && minPriceValue >= 0) {
+            params.push(`minPrice=${minPriceValue}`);
+        }
+        
+        if (!isNaN(maxPriceValue) && maxPriceValue >= 0) {
+            params.push(`maxPrice=${maxPriceValue}`);
+        }
+        
+        if (returnsAcceptedOnly) {
+            params.push(`ReturnsAcceptedOnly=${returnsAcceptedOnly}`);
+        }
+
+        if (freeShippingOnly) {
+            params.push(`freeShippingOnly=${freeShippingOnly}`);
+        }
+
+        if (conditionValues.length) {
+            params.push(`condition=${conditionValues.join(',')}`);
+        }
+
+        params.push(`keywords=${keywords}`);
+        params.push(`sortOrder=${sortOrder}`);
+        
+        let apiUrl = `https://myfirstpython-3979650766.wl.r.appspot.com/getEbayData?${params.join('&')}`;
 
     xhr.open('GET', apiUrl, true);
     xhr.onload = function() {
