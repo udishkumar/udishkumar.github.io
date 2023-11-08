@@ -1,0 +1,570 @@
+<div class="container">
+    <div class="form-container">
+        <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="mt-4 mb-4 mx-5" id="searchForm">
+            <div class="row">
+                <div class="col-lg-12 col-12"><h3>Product Search</h3></div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-lg-3 col-12">
+                    <label for="keyword" class="form-label mt-2">Keyword<span class="mandatory">*</span></label>
+                </div>
+                <div class="col-lg-5 col-12">
+                    <input type="text" formControlName="keyword" [class.is-invalid]="searchForm.controls['keyword'].invalid && (searchForm.controls['keyword'].dirty || searchForm.controls['keyword'].touched)" class="form-control custom-input w-100" placeholder="Enter Product Name(eg. iPhone 8)">
+                    <span class="text-danger">{{ keywordError }}</span>
+                </div>
+            </div>
+  
+            <div class="row mt-2">
+                <div class="col-lg-3 col-12">
+                    <label for="category" class="form-label">Category</label>
+                </div>
+                <div class="col-lg-2 col-12">
+                    <select id="category" formControlName="category" style="border-radius: 4px;">
+                        <option selected="">All Categories</option>
+                        <option value="Art">Art</option>
+                        <option value="Baby">Baby</option>
+                        <option value="Books">Books</option>
+                        <option value="Clothing, Shoes &amp; Accessories">Clothing, Shoes &amp; Accessories</option>
+                        <option value="Computers/Tablets &amp; Networking">Computers/Tablets &amp; Networking</option>
+                        <option value="Health &amp; Beauty">Health &amp; Beauty</option>
+                        <option value="Music">Music</option>
+                        <option value="Video Games &amp; Consoles">Video Games &amp; Consoles</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-2" formGroupName="condition">
+                <div class="col-lg-3 col-12">
+                    <label for="condition" class="form-label mt-1">Condition</label>
+                </div>
+                <div class="col-lg-1 col-3">
+                    <div class="form-check"><input class="form-check-input" type="checkbox" value="New" id="new" formControlName="new"><label class="form-check-label" for="new">New</label></div>
+                </div>
+                <div class="col-lg-1 col-3">
+                    <div class="form-check"><input class="form-check-input" type="checkbox" value="Used" id="used" formControlName="used"><label class="form-check-label" for="used">Used</label></div>
+                </div>
+                <div class="col-lg-1 col-6">
+                    <div class="form-check"><input class="form-check-input" type="checkbox" value="Unspecified" id="unspecified" formControlName="unspecified"><label class="form-check-label" for="unspecified">Unspecified</label></div>
+                </div>
+            </div>            
+            
+            <div class="row mt-2" formGroupName="shippingOptions">
+                <div class="col-lg-3 col-12">
+                    <label for="localPickup">Shipping&nbsp;Options</label>
+                </div>
+                <div class="col-lg-2 col-5">
+                    <div class="form-check"><input class="form-check-input" type="checkbox" id="localPickup" formControlName="localPickup"><label class="form-check-label" for="localPickup">Local&nbsp;Pickup</label></div>
+                </div>
+                <div class="col-lg-2 col-7">
+                    <div class="form-check"><input class="form-check-input" type="checkbox" id="freeShipping" formControlName="freeShipping"><label class="form-check-label" for="freeShipping">Free&nbsp;Shipping</label></div>
+                </div>
+            </div>
+            
+            <div class="row mt-2">
+                <div class="col-lg-3 col-12">
+                    <label for="distance">Distance(Miles)</label>
+                </div>
+                <div class="col-lg-2 col-12">
+                    <input type="number" id="distance" min="0" class="form-control" formControlName="distance" (keydown)="preventNegativeInput($event)">
+                </div>
+            </div>            
+            
+
+            <div class="row mt-2">
+                <div class="col-lg-3 col-12">
+                    <label for="location">From<span class="mandatory">*</span></label>
+                </div>
+                <div class="col-lg-9 col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" formControlName="location" value="current" id="currentLocation">
+                        <label class="form-check-label" for="currentLocation">
+                            Current Location
+                        </label>
+                    </div>
+                    <input type="text" formControlName="zipCodeCurrent" class="form-control w-100" style="display:none;">
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="radio" formControlName="location" value="other" id="otherLocation">
+                        <label class="form-check-label" for="otherLocation" id="locationOption">
+                            Others. Please specify zip code:
+                        </label>
+                    </div>
+                    <div class="col-lg-6 col-12 px-0">
+                        <input type="text" formControlName="zipCodeOthers" [class.is-invalid]="searchForm.get('zipCodeOthers')?.invalid && (searchForm.get('zipCodeOthers')?.dirty || searchForm.get('zipCodeOthers')?.touched)"  class="form-control w-100" matInput [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+                            <mat-option *ngFor="let item of options" [value]="item">
+                                {{item}}
+                            </mat-option>
+                        </mat-autocomplete>                        
+                        <span class="text-danger" *ngIf="searchForm.get('location')?.value === 'other'">{{ zipError }}</span>
+                    </div>                     
+                </div>
+            </div>
+            
+            
+            <div class="row mt-4">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-secondary mr-3" id="searchButton" [disabled]="!isFormValid()">
+                        <div style="display: flex; align-items: center;">
+                            <i class="material-icons">search</i>
+                            <span>Search</span>
+                        </div>
+                    </button>
+                    <button type="button" class="btn btn-light ml-3" (click)="clearForm()">
+                        <div style="display: flex; align-items: center;">
+                            <i class="material-icons">clear_all</i>
+                            <span>Clear</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="mainTabsDef" class="d-flex flex-column">
+        <ul class="nav nav-pills d-flex justify-content-center w-100 mt-5" id="myTabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="results-tab" data-toggle="tab" href="#results" role="tab" aria-controls="results" aria-selected="true">Results</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="wishlist-tab" data-toggle="tab" href="#wishlist" role="tab" aria-controls="wishlist" aria-selected="false" (click)="showWishlist()">Wish list</a>
+            </li>
+        </ul>
+    </div>
+
+    <div id="progressBar" class="mt-3" style="width: 100%;">
+        <div class="progress" *ngIf="isLoading">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" 
+                 style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+    
+    <div *ngIf="!isLoading && noRecord" style="width: 900px;" class="mt-3">
+        
+    </div>
+    
+        <div class="tab-content" id="myTabsContentMain">
+            <div class="tab-pane fade show active" id="results" role="tabpanel" aria-labelledby="results-tab">
+                <div *ngIf="!isLoading">
+                    <div *ngIf="!productDetails">
+                        <div class="ProductListTableStyle" *ngIf="products && products.length > 0">
+                            <ng-container id="ProductTableContainer" class="mt-5">
+                                <div>
+                                    <button style="display: flex; margin-left: auto;" class="btn btn-light mb-2" [disabled]="!selectedProduct" *ngIf="isDetailVisible" (click)="selectedProduct && viewProductDetails(selectedProduct)">Detail ></button>
+                                </div>
+                             
+                                <div class="responsive-table">
+                                    <table class="table table-dark">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Image</th>
+                                                <th scope="col">Title</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Shipping</th>
+                                                <th scope="col">Zip</th>
+                                                <th scope="col">Wish List</th>
+                                            </tr>
+                                        </thead>
+                                        
+                                        <tbody>
+                                            <tr *ngFor="let product of products" [class.selected-row]="product === selectedProduct">
+                                            <th scope="row">{{ product.index }}</th>
+                                            <td><a href="{{ product.product_image }}" target="_blank"><div style="width: 120px; height: 120px;"><img [src]="product.product_image" alt="Product Image" style="height: inherit; width: inherit;"></div></a></td>
+                                            <td class="product-name">
+                                                <span tabindex="0" data-toggle="tooltip" data-placement="bottom" title="{{ product.product_name }}">
+                                                    <a href="#" (click)="viewProductDetails(product)">{{ product.product_name }}</a>
+                                                </span>
+                                            </td>  
+                                            <td>${{ product.product_price }}</td>
+                                            <td>{{ product.shippingType }} Shipping</td>
+                                            <td>{{ product.zipCode }}</td>
+                                            <td>
+                                                <button class="btn btn-outline-light" id="productListWishBtn" (click)="toggleWishlistIcon(product, product.product_id)" style="box-shadow: none; border-radius: 4px; cursor: pointer; background-color: #f6f8fa;">
+                                                    <img [src]="'assets/svg/' + product.wishlistIcon" alt="Wish List Icon" width="30">
+                                                </button>
+                                            </td>
+                                            </tr>
+                                        </tbody>
+                                </table>
+                                </div>
+                                
+                            
+                                <nav aria-label="Pagination" class="text-center mt-4">
+                                    <ul class="pagination no-border" style="justify-content: center;">
+                                        
+                                        <li class="page-item" [class.disabled]="currentPage === 1">
+                                            <a class="page-link" href="#" (click)="currentPage !== 1 && previousPage($event)">
+                                                <span aria-hidden="false">&laquo;</span>
+                                                <span class="fa-light fa-chevrons-left">&nbsp;&nbsp;Previous</span>
+                                            </a>
+                                        </li>
+                             
+                                        <li class="page-item" *ngFor="let page of pages" [class.active]="currentPage === page">
+                                            <a class="page-link" href="#" (click)="goToPage(page, $event)">{{ page }}</a>
+                                        </li>
+                                
+                                 
+                                        <li class="page-item" [class.disabled]="currentPage === pages.length">
+                                            <a class="page-link" href="#" (click)="currentPage !== pages.length && nextPage($event)">
+                                                <span class="fa-light fa-chevrons-right">Next&nbsp;&nbsp;</span>
+                                                <span aria-hidden="false">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div *ngIf="productDetails">
+                        <ng-container *ngTemplateOutlet="prodDetail"></ng-container>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
+                <div *ngIf="!isLoading">
+                    <div *ngIf="!productDetails">
+                        <ng-container id="WishlistProductTableContainer" *ngIf="wishlistProducts && wishlistProducts.length > 0; else noData" class="mt-5">
+                            <div>
+                                <button style="display: flex; margin-left: auto;" class="btn btn-light mb-2" [disabled]="!selectedProduct" *ngIf="isDetailVisible" (click)="selectedProduct && viewProductDetails(selectedProduct)">Detail ></button>
+                            </div>
+                      
+                            <div class="responsive-wishlist-table">
+                                <table class="table table-dark">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Image</th>
+                                            <th scope="col">Title</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Shipping</th>
+                                            <th scope="col">Favorite</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let wishlistproduct of wishlistProducts; let i = index" [class.selected-row]="wishlistproduct === selectedProduct">
+                                            <th scope="row">{{ i + 1 }}</th>
+                                            <td><a href="{{ wishlistproduct.product_image }}" target="_blank"><div style="width: 120px; height: 120px;"><img [src]="wishlistproduct.product_image" alt="Product Image" style="height: inherit; width: inherit;"></div></a></td>
+                                            <td class="product-name">
+                                                <span tabindex="0" data-toggle="tooltip" data-placement="bottom" title="{{ wishlistproduct.product_name }}">
+                                                    <a href="#" (click)="wishlistViewProductDetails(wishlistproduct.product_id)">{{ wishlistproduct.product_name }}</a>
+                                                </span>
+                                            </td>  
+                                            <td>${{ wishlistproduct.product_price }}</td>
+                                            <td>{{ wishlistproduct.shippingType }} Shipping</td>
+                                            <td>
+                                                <button class="btn btn-outline-light" id="wishListWishBtn" (click)="toggleWishlistIcon(getWishlistProduct(wishlistproduct.product_id), wishlistproduct.product_id)" style="box-shadow: none; border-radius: 4px; cursor: pointer; background-color: #f6f8fa;">
+                                                    <img [src]="'assets/svg/icon2.svg'" alt="Wish List Icon" width="30">
+                                                </button>
+                                            </td>
+                                        </tr>
+                                 
+                                        <tr>
+                                            <td colspan="5" class="text-right">Total Shopping</td>
+                                            <td colspan="1">${{ getTotalPrice() }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div *ngIf="productDetails">
+                        <ng-container *ngTemplateOutlet="prodDetail"></ng-container>
+                    </div>
+                </div>   
+            </div> 
+        </div>
+    
+    
+
+    <ng-template #prodDetail>
+        <div id="ProductDetailsView" *ngIf="productDetails" class="mt-5">
+            <div style="align-items: center; justify-content: center; display: flex;">{{ productDetails.product_name }}</div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+               
+                <button style="border-radius: 5px;" (click)="backToProductsList()" class="btn btn-light">< List</button>
+             
+                <div style="display: flex; align-items: center;">
+            
+              
+                    <a target="_blank" [href]="'https://www.facebook.com/sharer/sharer.php?u=' + productDetails.product_url + '&amp;src=sdkpreparse'" class="fb-xfbml-parse-ignore">
+                        <img style="width: 30px; height: 30px; border-radius: 5px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Facebook_logo_36x36.svg/2048px-Facebook_logo_36x36.svg.png" alt="Facebook_logo" />
+                    </a>
+    
+                    <button class="btn btn-light" id="detailPageWishBtn" (click)="toggleWishlistIcon(getWishlistProduct(productDetails.product_id),productDetails.product_id )" style="box-shadow: none; border-radius: 4px; cursor: pointer; background-color: #f6f8fa; margin-right: 10px;">
+                        <img [src]="getWishlistIcon(productDetails.product_id)" alt="Wish List Icon" width="30">
+                    </button>
+                </div>
+            </div>
+            
+            <ul class="nav nav-tabs d-flex justify-content-end mt-5" id="myTabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="product-tab" data-toggle="tab" href="#product" role="tab" aria-controls="product" aria-selected="true">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="photos-tab" data-toggle="tab" href="#photos" role="tab" aria-controls="photos" aria-selected="false">Photos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="shipping-tab" data-toggle="tab" href="#shipping" role="tab" aria-controls="shipping" aria-selected="false">Shipping</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="seller-tab" data-toggle="tab" href="#seller" role="tab" aria-controls="seller" aria-selected="false">Seller</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="similarProducts-tab" data-toggle="tab" href="#similarProducts" role="tab" aria-controls="similarProducts" aria-selected="false">Similar Products</a>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="myTabsContentSub">
+                <div class="tab-pane show active fade" id="product" role="tabpanel" aria-labelledby="product-tab">
+                    <div class="productTabStyle">
+                        <table id="productDetailTable" class="table table-dark">
+                            <tr class="itemDetailsRow">
+                                <td scope="col">Product Images</td>
+                                <td><a href="#" (click)="openImageCarousel(productDetails.product_images)" data-toggle="modal" data-target="#imageCarouselModal" style="color: #638885;">View Product Images Here</a></td>
+                            </tr>
+                            <tr class="itemDetailsRow">
+                                <td scope="col">Price</td>
+                                <td>{{ productDetails.product_price }}</td>
+                            </tr>
+                            <tr class="itemDetailsRow">
+                                <td scope="col">Location</td>
+                                <td>{{ productDetails.location }}</td>
+                            </tr>
+                            <tr class="itemDetailsRow">
+                                <td scope="col">Return Policy</td>
+                                <td>{{ productDetails.returnPolicy }}</td>
+                            </tr>
+                            <ng-container *ngFor="let item of productDetails.itemSpecifics">
+                            <tr class="itemDetailsRow">
+                                <td scope="col">{{ item.Name }}</td>
+                                <td>{{ item.Value }}</td>
+                            </tr>
+                            </ng-container>
+                        </table>             
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="photos" role="tabpanel" aria-labelledby="photos-tab">
+                    <div class="container product-image-container" *ngIf="productImages.length > 0">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-12 mb-1 pl-1" style="padding-right: 0px;">
+                                <img [src]=productImages[0] class="w-100 shadow-1-strong mt-2" alt="Product Image1" style="border: 10px solid black;"/>
+                                <img [src]=productImages[1] class="w-100 shadow-1-strong mt-2" alt="Product Image2" style="border: 10px solid black;"/>
+                            </div>
+                            <div class="col-lg-4 col-md-12 mb-1 pl-1" style="padding-right: 0px;">
+                                <img [src]=productImages[2] class="w-100 shadow-1-strong mt-2" alt="Product Image3" style="border: 10px solid black;"/>
+                                <img [src]=productImages[3] class="w-100 shadow-1-strong mt-2" alt="Product Image4" style="border: 10px solid black;"/>
+                                <img [src]=productImages[4] class="w-100 shadow-1-strong mt-2" alt="Product Image5" style="border: 10px solid black;"/>
+                            </div>
+                            <div class="col-lg-4 col-md-12 mb-1 pl-1" style="padding-right: 0px;">
+                                <img [src]=productImages[5] class="w-100 shadow-1-strong mt-2" alt="Product Image6" style="border: 10px solid black;"/>
+                                <img [src]=productImages[6] class="w-100 shadow-1-strong mt-2" alt="Product Image7" style="border: 10px solid black;"/>
+                                <img [src]=productImages[7] class="w-100 shadow-1-strong mt-2" alt="Product Image8" style="border: 10px solid black;"/>
+                            </div>
+                        </div>
+                    </div>                                
+                </div>
+
+                <div class="tab-pane fade" id="shipping" role="tabpanel" aria-labelledby="shipping-tab">
+                    <div class="shippingTabStyle">
+                        <table id="shippingDetailTable" class="table table-dark">
+                            <tr *ngIf="productDetails.shipping_cost" class="itemDetailsRow">
+                                <td scope="col">Shipping Cost</td>
+                                <td scope="col">{{ productDetails.shipping_cost }}</td>
+                            </tr>
+                            <tr *ngIf="productDetails.shipping_locations" class="itemDetailsRow">
+                                <td scope="col">Shipping Locations</td>
+                                <td scope="col">{{ productDetails.shipping_locations }}</td>
+                            </tr>
+                            <tr *ngIf="productDetails.handling_time" class="itemDetailsRow">
+                                <td scope="col">Handling Time</td>
+                                <td scope="col">{{ productDetails.handling_time }}</td>
+                            </tr>
+                            <tr *ngIf="productDetails.expedited_shipping" class="itemDetailsRow">
+                                <td scope="col">Expedited Shipping</td>
+                                <td scope="col">
+                                    <div style="width: 20px; height: 20px; justify-content: center;">
+                                        <img style="height: inherit; width: inherit;" [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Icons8_flat_checkmark.svg/1024px-Icons8_flat_checkmark.svg.png?20160307113236'" alt="Tick Mark" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="productDetails.one_day_shipping" class="itemDetailsRow">
+                                <td scope="col">One Day Shipping</td>
+                                <td scope="col">
+                                    <div style="width: 20px; height: 20px; justify-content: center;">
+                                        <img style="height: inherit; width: inherit;" [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Icons8_flat_checkmark.svg/1024px-Icons8_flat_checkmark.svg.png?20160307113236'" alt="Tick Mark" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="productDetails.return_accepted" class="itemDetailsRow">
+                                <td scope="col">Return Accepted</td>
+                                <td scope="col">
+                                    <div style="width: 20px; height: 20px; justify-content: center;">
+                                        <img style="height: inherit; width: inherit;" [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Icons8_flat_checkmark.svg/1024px-Icons8_flat_checkmark.svg.png?20160307113236'" alt="Tick Mark" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="seller" role="tabpanel" aria-labelledby="seller-tab">
+                    <div class="sellerTabStyle">
+                        <table id="sellerDetailTable" class="table table-dark">
+                            <thead>
+                                <tr class="itemDetailsRow">
+                                    <td scope="col" style="font-size: 18px; text-align: center;" colspan="2">{{productDetails.seller}}</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="productDetails.feedback_score" class="itemDetailsRow">
+                                    <td scope="col">Feedback Score</td>
+                                    <td scope="col">{{ productDetails.feedback_score }}</td>
+                                </tr>
+                                <tr *ngIf="productDetails.popularity" class="itemDetailsRow">
+                                    <td scope="col">Popularity</td>
+                                    <td scope="col">
+                                        <circle-progress class="ml-0"
+                                            [percent]="productDetails.popularity" 
+                                            [space]="50"
+                                            [radius]="17"
+                                            [titleFontSize]="'10'"
+                                            [subtitleFontSize]="'0'"
+                                            [titleColor]="'#ffffff'"
+                                            [outerStrokeWidth]="2" 
+                                            [innerStrokeWidth]="0" 
+                                            [outerStrokeColor]="'#1b711b'" 
+                                            [innerStrokeColor]="'#ffffff'" 
+                                            [animation]="false" 
+                                            [animationDuration]="300"
+                                            [title]="productDetails.popularity"
+                                            [showTitle]="true"
+                                            [showSubtitle]="false"
+                                            [maxPercent]="100"
+                                            [backgroundPadding]="0"
+                                            [backgroundColor]="'#343a40'"
+                                            [showUnits]="false">
+                                        </circle-progress>
+                                    </td>                                 
+                                </tr>
+                                <tr class="itemDetailsRow">
+                                    <td scope="col">Feedback Rating Star</td>
+                                    <td scope="col"><div style="height: 50px; width: 50px;"><mat-icon style="font-size: 40px; height: inherit; width: inherit;" [ngStyle]="{'color': productDetails.feedback_rating_star}">stars</mat-icon></div></td>
+                                </tr>
+                                <tr *ngIf="productDetails.top_rated" class="itemDetailsRow">
+                                    <td scope="col">Top Rated</td>
+                                    <td scope="col">
+                                        <div style="width: 20px; height: 20px; justify-content: center;">
+                                            <img style="height: inherit; width: inherit;" [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Icons8_flat_checkmark.svg/1024px-Icons8_flat_checkmark.svg.png?20160307113236'" alt="Tick Mark" />
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="productDetails.store_name" class="itemDetailsRow">
+                                    <td scope="col">Store Name</td>
+                                    <td scope="col">{{ productDetails.store_name }}</td>
+                                </tr>
+                                <tr *ngIf="productDetails.buy_product_at" class="itemDetailsRow">
+                                    <td scope="col">Buy Products At</td>
+                                    <td scope="col"><a href="{{ productDetails.buy_product_at }}" target="_blank">View Store</a></td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                    </div>                  
+                </div>
+
+                <div class="tab-pane fade" id="similarProducts" role="tabpanel" aria-labelledby="similarProducts-tab"> 
+                    <div class="similarProductsTabStyle">
+                        <div class="container-fluid p-3">
+                            <div class="dropdowns" style="margin: 5px 0px;">
+                            <select [(ngModel)]="selectedSortOption" (change)="sortItems()" style="margin-right: 5px;">
+                                <option value="default">Default</option>
+                                <option value="productName">Product Name</option>
+                                <option value="daysLeft">Days Left</option>
+                                <option value="price">Price</option>
+                                <option value="shippingCost">Shipping Cost</option>
+                            </select>
+                    
+                            <select [(ngModel)]="selectedOrder" [disabled]="selectedSortOption === 'default'" (change)="sortItems()">
+                                <option value="asc">Ascending</option>
+                                <option value="desc">Descending</option>
+                            </select>
+                        </div>
+                        
+                            <div *ngFor="let item of displayedItems" class="row mb-1 justify-content-center">
+                                <div class="col-12" style="max-width: 900px;">
+                                    <div class="card text-white bg-dark">
+                                        <div class="d-flex align-items-center">
+                                            <div style="flex: 0 0 100px;">
+                                                <img [src]="item.image_url" alt="Product Image" class="img-fluid p-3" style="max-width: 100px; max-height: 100px; object-fit: cover; margin: auto; display: block;">
+                                            </div>
+                                            <div class="flex-grow-1 px-3">
+                                                <div class="card-body p-2">
+                                                    <h5 class="card-title mb-1" style="font-size: 14px;">
+                                                        <a [href]="item.product_url" target="_blank" rel="noopener noreferrer" [ngStyle]="{'color': '#638885'}">
+                                                            {{ item.product_name }}
+                                                        </a>
+                                                    </h5>                                                    
+                                                    <div class="card-text">
+                                                        <p style="color: #9ec99a; font-size: 12px; margin: 0;">Price: ${{item.price}}</p>
+                                                        <p style="color: #b69c61; font-size: 12px; margin: 0;">Shipping Cost: ${{item.shipping_cost}}</p>
+                                                        <p style="color: white; font-size: 12px; margin: 0;">Days Left: {{item.daysLeft}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+
+                            <div class="text-center my-1">
+                                <button class="btn btn-secondary" style="outline: none;" (click)="toggleItems()">{{showMore ? 'Show Less' : 'Show More'}}</button>
+                            </div>
+                        </div>
+                    </div>            
+                </div>
+            </div> 
+        </div>
+    </ng-template>
+     
+
+    <div *ngIf="isModalOpen" class="modal fade" id="imageCarouselModal" tabindex="-1" role="dialog" aria-labelledby="imageCarouselModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="display: flex; flex-direction: column;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;"> 
+                        <div style="font-size: 10px; white-space: nowrap;">Product Images</div>
+                        <div><button style="background-color: transparent; border: none; font-size: 14px; outline: none;" (click)="closeModal()">&times;</button></div> 
+                    </div>                    
+                    <div style="width: 100%; height: 1px; background-color: lightgray; margin-bottom: 10px; margin-top: 15px;"></div>
+                    <div id="imageCarousel" class="carousel slide" data-ride="carousel" style="text-align: center;">
+                        <div class="carousel-inner">  
+                            <div *ngFor="let image of carouselImages; let i = index" class="carousel-item" [ngClass]="{ 'active': i === 0 }">
+                                <img [src]="image" class="d-block" style="border: 10px solid black; height: 450px; width: 450px; object-fit: contain; margin: auto;" alt="Product Image"/>
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#imageCarousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: black;"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#imageCarousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: black;"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                    <div style="display: flex; justify-content: right; align-items: right; margin-top: 15px;">
+                        <button class="btn btn-secondary" (click)="closeModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </div>
+</div>
+   
+
+<ng-template #noData>
+    <div class="no-data-message">
+        No records.
+    </div>
+</ng-template>
