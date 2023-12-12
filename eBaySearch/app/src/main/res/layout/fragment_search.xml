@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_search"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.Search">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tvKeyword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tvKeyword"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.033"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <EditText
+            android:id="@+id/etKeyword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/tvKeywordHint"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvKeyword"
+            app:layout_constraintVertical_bias="0.015"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <TextView
+            android:id="@+id/tvErrorKeyword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FF0000"
+            app:layout_constraintTop_toBottomOf="@+id/etKeyword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tvCategory"
+            android:visibility="gone"
+            android:padding="8dp"
+            android:text="error"/>
+        <TextView
+            android:id="@+id/tvCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tvCategory"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etKeyword"
+            app:layout_constraintVertical_bias="0.015"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCategory"
+            app:layout_constraintVertical_bias="0.015"
+            tools:layout_editor_absoluteX="0dp"/>
+
+        <TextView
+            android:id="@+id/tvCondition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tvCondition"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerCategory"
+            app:layout_constraintVertical_bias="0.015"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <CheckBox
+            android:id="@+id/checkConditionNew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tvConditionNew"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCondition"
+            app:layout_constraintVertical_bias="0.015" />
+
+        <CheckBox
+            android:id="@+id/checkConditionUsed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tvConditionUsed"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.182"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCondition"
+            app:layout_constraintVertical_bias="0.015" />
+
+        <CheckBox
+            android:id="@+id/checkConditionUnspecified"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tvConditionUnspecified"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.432"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCondition"
+            app:layout_constraintVertical_bias="0.015" />
+
+        <TextView
+            android:id="@+id/tvShipping"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tvShippingOptions"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkConditionUnspecified"
+            app:layout_constraintVertical_bias="0.015" />
+
+        <CheckBox
+            android:id="@+id/checkShippingLocal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tvShippingOptionsLocal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvShipping"
+            app:layout_constraintVertical_bias="0.015" />
+
+        <CheckBox
+            android:id="@+id/checkFreeShipping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tvShippingOptionsFree"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.407"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvShipping"
+            app:layout_constraintVertical_bias="0.015" />
+
+        <TextView
+            android:id="@+id/tvEnableSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tvEnableNearbySearch"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkShippingLocal"
+            app:layout_constraintVertical_bias="0.030" />
+
+        <CheckBox
+            android:id="@+id/checkEnableSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.382"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkShippingLocal"
+            app:layout_constraintVertical_bias="0.015" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/nearbySearchLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkEnableSearch"
+            app:layout_constraintVertical_bias="0.038"
+            tools:layout_editor_absoluteX="0dp">
+
+            <TextView
+                android:id="@+id/tvDistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tvDistance"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.015"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <EditText
+                android:id="@+id/etDistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/tvDistanceHint"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDistance"
+                app:layout_constraintVertical_bias="0.015"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <TextView
+                android:id="@+id/tvFrom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tvDistanceFrom"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etDistance"
+                app:layout_constraintVertical_bias="0.015"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/llzip"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.589"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvFrom"
+                app:layout_constraintVertical_bias="0.015">
+
+                <RadioButton
+                    android:id="@+id/radioBtnCurrent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="@string/radioCurrentLocation" />
+
+                <LinearLayout
+                    android:layout_width="354dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioBtnOther"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/actZipcode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/etZipCodeHint"
+                        android:completionThreshold="1"
+                        android:dropDownAnchor="@id/tvDistance"
+                        android:dropDownVerticalOffset="50dp"
+                        android:dropDownWidth="match_parent"
+                        android:inputType="number"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewCurrent"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tvErrorZipcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="0dp"
+                    android:layout_marginLeft="35dp"
+                    android:gravity="left"
+                    android:textColor="#FF0000"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:background="@color/custom_orange"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:text="@string/btnSearch"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.144"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nearbySearchLayout"
+            app:layout_constraintVertical_bias="0.107" />
+
+        <Button
+            android:id="@+id/btnClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/custom_orange"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:text="@string/btnClear"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.811"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nearbySearchLayout"
+            app:layout_constraintVertical_bias="0.107" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

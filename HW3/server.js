@@ -9,7 +9,7 @@ const EBAY_API_KEY = "UdishKum-pythonDe-PRD-a72a98ced-f8556164";
 const MERCHANDISING_URL = "https://svcs.ebay.com/MerchandisingService";
 const GOOGLE_API_ENDPOINT = "https://www.googleapis.com/customsearch/v1";
 const CX = "d3c1ec159f9a3464d";
-const GOOGLE_API_KEY = "AIzaSyAmoreggdQcw5caW77xw0jgmJPA4s1ix_s";
+const GOOGLE_API_KEY = "AIzaSyBmdG2Av2i6SZD08ycWv9orPK-UaXzPOFg";
 const AUTH_KEY="VWRpc2hLdW0tcHl0aG9uRGUtUFJELWE3MmE5OGNlZC1mODU1NjE2NDpQUkQtNzJhOThjZWQyZWM5LTMyYWEtNDc2OS1hNjA5LWVkOTU="
 
 
@@ -124,7 +124,6 @@ app.get('/getEbayData', async (req, res) => {
                 });
             }
         }
-
         const response = await axios.get(EBAY_URL, { params: payload });
         const data = response.data;
 
@@ -258,6 +257,14 @@ app.get('/getEbayData/:item_id', async (req, res) => {
             location: item.PostalCode ? `${item.Location || ''}, ${item.PostalCode}` : item.Location || "",
             seller: item.Seller ? item.Seller.UserID : "",
             returnPolicy: `${returnPolicy.ReturnsAccepted || ''} within ${returnPolicy.ReturnsWithin || ''}`,
+            refundMode: returnPolicy.Refund || "",
+            returnsWithinDuration: returnPolicy.ReturnsWithin || "",
+            returnsAccepted: returnPolicy.ReturnsAccepted || "",
+            shippingCostPaidBy: returnPolicy.ShippingCostPaidBy || "",
+            globalShipping: item.hasOwnProperty('GlobalShipping') ? item.GlobalShipping : "Not Available",
+            handlingTime: item.HandlingTime || "",
+            storeName: item.Storefront?.StoreName || "",
+            storeURL: item.Storefront?.StoreURL || "",
             itemSpecifics
         };
 

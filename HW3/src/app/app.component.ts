@@ -60,8 +60,13 @@ export class AppComponent implements OnInit {
   selectedOrder = 'asc';
   selectedProduct: any = null;
   wishlistProducts: any[] = [];
-  serverUrl: string = 'https://udishkumar-hw3.wl.r.appspot.com';
+  // serverUrl: string = 'http://localhost:8080';
+  serverUrl: string = 'https://uk-hw3.wl.r.appspot.com';
   matchingProduct: any;
+  wishlistActive: boolean = false;
+  resultSectionActive: boolean = true;
+  activeTab: string = 'results';
+  currentProduct: any;
 
 
   ngOnInit() {
@@ -83,6 +88,7 @@ export class AppComponent implements OnInit {
       zipCodeCurrent: new FormControl(null)
     });
     
+    // Check validation whenever the keyword input changes
     this.searchForm.get('keyword')!.valueChanges.subscribe(value => {
       const keywordControl = this.searchForm.get('keyword');
       
@@ -97,10 +103,12 @@ export class AppComponent implements OnInit {
     this.searchForm.get('location')!.valueChanges.subscribe(value => {
       const zipCodeControl = this.searchForm.get('zipCodeOthers');
       if (value === 'current') {
+        // Fetch the current location postal code
         this.fetchCurrentLocationPostal().subscribe(postalCode => {
           this.searchForm.get('zipCodeCurrent')?.setValue(postalCode);
         });
     
+        // Clear the value of zipCodeOthers and remove its validators
         zipCodeControl?.setValue(null);
         zipCodeControl?.clearValidators();
     
@@ -140,6 +148,7 @@ export class AppComponent implements OnInit {
 
     const locationValue = this.searchForm.get('location')!.value;
 
+    // If the default location value is 'current', fetch the postal code
     if (locationValue === 'current') {
         this.fetchCurrentLocationPostal().subscribe(postalCode => {
           this.searchForm.get('zipCodeCurrent')?.setValue(postalCode);
@@ -156,6 +165,7 @@ export class AppComponent implements OnInit {
     backdrops.forEach(backdrop => backdrop.remove());
   }
 
+  // This method returns true if the form is valid, otherwise false.
   isFormValid(): boolean {
     const keywordValue = this.searchForm.get('keyword')!.value?.trim();
     const locationValue = this.searchForm.get('location')!.value;
@@ -165,10 +175,12 @@ export class AppComponent implements OnInit {
         return false;
     }
 
+    // If location is 'current', validate only keyword
     if (locationValue === 'current') {
         return keywordValue !== '';
     }
 
+    // If location is 'other', validate only zipCode
     if (locationValue === 'other') {
         if (!zipValue) {
             return false;
@@ -176,11 +188,13 @@ export class AppComponent implements OnInit {
         return /^\d{5}$/.test(zipValue);
     }
 
+    // Default case (when the form loads)
     return keywordValue !== '';
 }
 
 toggleWishlistIcon(product: any, wishlistproduct_id: any) {
   console.log("wishlist icon clicked");
+  // console.log(JSON.stringify(product));
   if(!product) {
     this.removeFromWishlist(wishlistproduct_id).subscribe(() => {
       this.showWishlist();
@@ -234,7 +248,7 @@ addToWishlist(product: any): Observable<any> {
       product_image: product.product_image,
       product_name: product.product_name,
       product_price: product.product_price,
-      shippingType: product.shippingType,
+      shippingType: product.shippingType
   };
   
   return this.http.post(`${this.serverUrl}/wishlist`, body)
@@ -243,31 +257,58 @@ addToWishlist(product: any): Observable<any> {
     );
 }
 
-
+// When the wishlist tab is clicked, fetch the wishlist items
 showWishlist() {
   this.http.get<Product[]>(`${this.serverUrl}/wishlist`).subscribe((data: Product[]) => {
     this.wishlistProducts = data;
 });
 }
 
+setActiveTab(tabName: string) {
+  this.activeTab = tabName;
+  if (this.activeTab == 'results'){
+    this.wishlistActive = false;
+    this.resultSectionActive = true;
+    console.log("cuurent tab is-", this.activeTab);
+    console.log("wishlistactive is-", this.wishlistActive);
+    console.log("resultSectionActive is-", this.resultSectionActive);
+  }else{
+    this.wishlistActive = true;
+    this.resultSectionActive = false;
+    this.showWishlist();
+    console.log("cuurent tab is-", this.activeTab);
+    console.log("wishlistactive is-", this.wishlistActive);
+    console.log("resultSectionActive is-", this.resultSectionActive);
+  }
+}
+
+
+// Call this function after getting API response
 setupPagination(products: any[]) {
+  // Assign index and wishlistIcon properties to each product
   let productIndex = 1;
   products.forEach(product => {
     product.index = productIndex++;
+    // product.wishlistIcon = 'icon1.svg';  // By default, setting the icon to 'icon1.svg'
     const productFromWL = this.wishlistProducts.find(wishlistProduct => wishlistProduct.product_id ===  product.product_id);
+    // console.log(this.wishlistProducts);
     if(productFromWL){
       product.wishlistIcon = 'icon2.svg';
     }else{
       product.wishlistIcon = 'icon1.svg';
     }
+    // return product ? `assets/svg/${product.wishlistIcon}` : 'assets/svg/icon2.svg';
+    // const isWishlisted = this.wishlistProducts.some(wishlistProduct => wishlistProduct.product_id === product.product_id);
+    // console.log("exists in wishilist",product.product_id, product.wishlistIcon);
+    // product.wishlistIcon = isWishlisted ? 'icon2.svg' : 'icon1.svg';
   });
 
-  this.allProducts = products;
+  this.allProducts = products;  // Storing the entire list of products
 
   const totalPages = Math.ceil(products.length / this.itemsPerPage);
   this.pages = Array(totalPages).fill(0).map((x, i) => i + 1);
 
-  this.displayProductsForPage(1); 
+  this.displayProductsForPage(1);  // Displaying the first page of products initially
 }
 
 openImageCarousel(images: string[]) {
@@ -288,7 +329,10 @@ backToProductsList() {
 }
 
 selectProductFromWishlist(wishlistProductId: string) {
+  // Find the product in the products array that matches the wishlist product ID
   const matchingProduct = this.products.find(product => product.product_id === wishlistProductId);
+  
+  // If there's a matching product, set it as the selectedProduct
   if (matchingProduct) {
     this.selectedProduct = matchingProduct;
   } else {
@@ -297,14 +341,18 @@ selectProductFromWishlist(wishlistProductId: string) {
 }
 
 
-viewProductDetails(product: any) {
-  console.log(this.matchingProduct+' matching product entered in viewProductDetails method '+JSON.stringify(product));
-    this.isDetailVisible = false;
-    this.isLoading = true;
-    this.productDetails = null;
+viewProductDetailsForResult(product: any) {
+
+  // this.currentProduct = this.allProducts.find(product => product.product_id === product_id);
+  console.log(this.matchingProduct+' matching product entered in viewProductDetails method ',product);
+    this.isDetailVisible = false; // Hide the Detail button
+    this.isLoading = true; // Show the progress bar
+    this.productDetails = null; // Reset product details
     this.selectedProduct = product;
     const productId = product.product_id;
+  console.log("selected product is-", this.selectedProduct);
 
+  // Make the API call
   this.http.get(`${this.serverUrl}/getEbayData/${productId}`).subscribe((response: any) => {
       this.isLoading = false;
       const colorToHexMapping: { [key: string]: string } = {
@@ -318,11 +366,16 @@ viewProductDetails(product: any) {
     };
 
     const extractColorFromValue = (value: string): string => {
+      // Remove "Shooting" suffix to get the actual color
       const color = value.replace("Shooting", "");
-      return colorToHexMapping[color] || '';
+      return colorToHexMapping[color] || ''; // If color doesn't exist in the map, return an empty string
     }
       this.similarItems = response.similarItems;
+      // In the subscription callback, after you've set similarItems:
       this.displayedItems = this.similarItems.slice(0, this.showMore ? 20 : 5);
+
+      // this.displayedItems = this.similarItems.slice(0, 5);
+      // Add the fields to the response
       if(product.shipping_cost != ''){
         response.shipping_cost = '$'+product.shipping_cost;
       }
@@ -352,8 +405,86 @@ viewProductDetails(product: any) {
       }
       
       console.log('Product Details:', response);
+      // Now assign the updated response to productDetails
       
       this.productDetails = response;
+      // Extract product_name and make a secondary API call to get image URLs
+      const productName = encodeURIComponent(response.product_name);
+      this.http.get(`${this.serverUrl}/getPhotos/${productName}`).subscribe((imgResponse: any) => {
+        this.productImages = [
+          imgResponse.link1, imgResponse.link2, imgResponse.link3, imgResponse.link4,
+          imgResponse.link5, imgResponse.link6, imgResponse.link7, imgResponse.link8
+        ];
+      });
+  });
+}
+
+viewProductDetailsForWishList(product: any) {
+  // this.currentProduct = this.allProducts.find(product => product.product_id === product_id);
+  console.log(this.matchingProduct+' matching product entered in viewProductDetails method '+JSON.stringify(product));
+    this.isDetailVisible = false; // Hide the Detail button
+    this.isLoading = true; // Show the progress bar
+    this.productDetails = null; // Reset product details
+    this.selectedProduct = product;
+    const productId = product.product_id;
+  
+  // Make the API call
+  this.http.get(`${this.serverUrl}/getEbayData/${productId}`).subscribe((response: any) => {
+      this.isLoading = false;
+      const colorToHexMapping: { [key: string]: string } = {
+        'Yellow': '#FFFF00',
+        'Blue': '#0000FF',
+        'Turquoise': '#40E0D0',
+        'Purple': '#800080',
+        'Red': '#FF0000',
+        'Green': '#008000',
+        'Silver': '#C0C0C0'
+    };
+
+    const extractColorFromValue = (value: string): string => {
+      // Remove "Shooting" suffix to get the actual color
+      const color = value.replace("Shooting", "");
+      return colorToHexMapping[color] || ''; // If color doesn't exist in the map, return an empty string
+    }
+      this.similarItems = response.similarItems;
+      // In the subscription callback, after you've set similarItems:
+      this.displayedItems = this.similarItems.slice(0, this.showMore ? 20 : 5);
+
+      // this.displayedItems = this.similarItems.slice(0, 5);
+      // Add the fields to the response
+      if(product.shipping_cost != ''){
+        response.shipping_cost = '$'+product.shipping_cost;
+      }
+      else{response.shipping_cost = product.shippingType+' Shipping';}
+      response.shipping_locations = product.shipping_locations;
+      response.handling_time = product.handling_time;
+      response.feedback_score = product.feedback_score;
+      response.popularity = product.popularity;
+      response.feedback_rating_star = extractColorFromValue(product.feedback_rating_star);
+      response.store_name = product.store_name;
+      response.buy_product_at = product.buy_product_at;
+      response.seller = product.seller;
+      response.product_url = encodeURIComponent(response.product_url);
+      if (product.expedited_shipping == 'true') {
+        response.expedited_shipping = true;
+      }
+    
+      if (product.one_day_shipping == 'true') {
+          response.one_day_shipping = true;
+      }
+      
+      if (product.return_accepted == 'true') {
+          response.return_accepted = true;
+      }
+      if (product.top_rated == 'true') {
+          response.top_rated = true;
+      }
+      
+      console.log('Product Details:', response);
+      // Now assign the updated response to productDetails
+      
+      this.productDetails = response;
+      // Extract product_name and make a secondary API call to get image URLs
       const productName = encodeURIComponent(response.product_name);
       this.http.get(`${this.serverUrl}/getPhotos/${productName}`).subscribe((imgResponse: any) => {
         this.productImages = [
@@ -366,10 +497,14 @@ viewProductDetails(product: any) {
 
 wishlistViewProductDetails(wishlistProductId: string) {
   console.log('I am clicked from wishlistViewProductDetails method' + wishlistProductId);
+  // Find the product in the main products array that matches the wishlist product ID
+  const productFromWL = this.wishlistProducts.find(wishlistProduct => wishlistProduct.product_id ===  wishlistProductId);
+  console.log("wishlist product clicked ----",productFromWL)
   this.matchingProduct = this.allProducts.find(product => product.product_id === wishlistProductId);
   console.log(wishlistProductId+' ID matched with '+this.matchingProduct.product_id);
+  // If there's a matching product in the main product list, call viewProductDetails
   if (this.matchingProduct) {
-    this.viewProductDetails(this.matchingProduct);
+    this.viewProductDetailsForResult(this.matchingProduct);
   } else {
     console.error('Product not found in the main product list');
   }
@@ -422,21 +557,24 @@ onOptionSelected(event: MatAutocompleteSelectedEvent): void {
 
 onSubmit() {
   this.isDetailVisible=true;
-  this.productDetails = null;
-  this.products = [];   
-  this.allProducts = [];   
-  this.pages = [];          
+  this.productDetails = null; // Reset product details
+  this.products = [];        // Clearing the currently displayed products
+  this.allProducts = [];     // Clearing all products
+  this.pages = [];           // Clearing pagination pages
   this.selectedSortOption = 'default';
   const requestData = this.generateRequestData();
   console.log('Request Data:', requestData);
+  // Show the progress bar
   this.isLoading = true;
 
+  // Delay for 2 seconds before making the API call
   setTimeout(() => {
     this.sendJSONData(requestData).subscribe(response => {
       if(response.length > 0){
         console.log('API Response:', response);
-        this.setupPagination(response);
+        this.setupPagination(response);  // Setup the pagination and products
         this.isLoading = false;
+        this.noRecord = false;
       }else{
         this.isLoading = false;
         this.noRecord = true;
@@ -450,8 +588,10 @@ onSubmit() {
 }
 
 sendJSONData(data: any): Observable<any> {
+  // Construct the base endpoint URL
   const endpoint = `${this.serverUrl}/getEbayData`;
   
+  // Convert the data object to query parameters
   const params = new HttpParams({ fromObject: data });
   
   return this.http.get(endpoint, { params });
@@ -463,11 +603,12 @@ onReset() {
     location: 'current',
     zipCodeOthers: null
   });
-  this.keywordError = '';
+  // Resetting to default values for category and location, 
+  this.keywordError = ''; // Resetting the error message
 }
 
 preventNegativeInput(event: KeyboardEvent): void {
-  if (event.key === '-' || event.keyCode === 189) { 
+  if (event.key === '-' || event.keyCode === 189) { // keyCode 189 is for the minus key
     event.preventDefault();
   }
 }
@@ -484,8 +625,10 @@ fetchCurrentLocationPostal(): Observable<string> {
 }
 
 clearForm(): void {
+  // 1. Reset the form to its initial state
   this.searchForm.reset();
   this.noRecord = false;
+  // 2. Set default or empty values for form fields
   this.searchForm.patchValue({
     keyword: '',
     category: 'All Categories',
@@ -503,19 +646,24 @@ clearForm(): void {
     zipCodeOthers: null
   });
 
+  // 3. Clear the table and pagination related view
+  this.products = [];        // Clearing the currently displayed products
+  this.allProducts = [];     // Clearing all products
+  this.pages = [];           // Clearing pagination pages
+  this.currentPage = 1;      // Resetting the current page to 1
   
-  this.products = [];      
-  this.allProducts = [];  
-  this.pages = [];         
-  this.currentPage = 1;     
-  this.productDetails = null;
+  // 4. Close the product details view
+  this.productDetails = null; // This will ensure the product details view is not displayed
   this.selectedProduct = null;
   this.selectedSortOption = 'default';
   this.isDetailVisible = false;
 }
 
 generateRequestData(): any {
+  // Extract form values
   const formValues = this.searchForm.value;
+
+  // 1. Category mapping
   const categoryMapping: { [key: string]: number } = {
     'Art': 550,
     'Baby': 2984,
@@ -526,6 +674,8 @@ generateRequestData(): any {
     'Music': 11233,
     'Video Games & Consoles': 1249
   };
+
+  // 2. Determine condition value
   let conditionValue: string = "";
   const conditions = formValues.condition;
   if (conditions.new && conditions.used) {
@@ -542,9 +692,12 @@ generateRequestData(): any {
     conditionValue = "1000,3000";
   }
 
+  // 3. Determine shipping option values
   const shippingOptions = formValues.shippingOptions;
   const localPickupOnly = shippingOptions.localPickup || false;
   const freeShippingOnly = shippingOptions.freeShipping || false;
+
+  // 4. Structure the JSON response
   const requestData: any = {
     condition: conditionValue,
     keywords: formValues.keyword,
@@ -553,6 +706,8 @@ generateRequestData(): any {
     freeShippingOnly: freeShippingOnly,
     zipCode: formValues.location === 'current' ? formValues.zipCodeCurrent : formValues.zipCodeOthers
   };
+
+  // Conditionally add category if not "All Categories"
   if (formValues.category !== 'All Categories') {
     requestData.category = categoryMapping[formValues.category];
   }
@@ -560,12 +715,17 @@ generateRequestData(): any {
   return requestData;
 }
 
+// Function to toggle between showing more/less similar items
 toggleItems(): void {
+  // Toggle the state
   this.showMore = !this.showMore;
+
+  // Adjust the displayed items based on the updated state
   const itemsToShow = this.showMore ? 20 : 5;
   this.displayedItems = this.similarItems.slice(0, itemsToShow);
 }
 
+// Function to sort the similar items
 sortItems(): void {
   if (this.selectedSortOption === 'default') {
     this.displayedItems = this.similarItems.slice(0, this.showMore ? this.similarItems.length : 5);
@@ -595,12 +755,16 @@ sortItems(): void {
       default:
         break;
     }
+
+    // If descending is selected, reverse the order
     if (this.selectedOrder === 'desc') {
       comparison = -comparison;
     }
 
     return comparison;
   });
+
+  // Update displayed items based on whether showMore is true or false
   this.displayedItems = this.similarItems.slice(0, this.showMore ? this.similarItems.length : 5);
 }
 

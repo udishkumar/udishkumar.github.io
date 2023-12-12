@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="custom_purple">#5f3fb3</color>
+    <color name="custom_orange">#ff6f20</color>
+    <color name="custom_light_purple">#a37fe8</color>
+    <color name="custom_light_orange">#e9b6b5</color>
+    <color name="custom_toast_color">#c1c1c2</color>
+    <color name="custom_black">#686868</color>
+    <color name="custom_light_purple2">#8572a8</color>
+    <color name="custom_light_purple3">#d4d2df</color>
+    <color name="red">#da4b4a</color>
+    <color name="custom_orange2">#c7521c</color>
+
+    <color name="unselected_tab_color">@color/custom_light_purple</color>
+    <color name="unselected_tab_icon_color">@color/custom_light_orange</color>
+    <color name="selected_tab_color">@color/white</color>
+    <color name="progressBar">@color/custom_light_purple2</color>
+    <color name="progressBarText">@color/custom_purple</color>
+    <color name="cardTextColor">@color/custom_black</color>
+    <color name="fabcolor">@color/custom_orange2</color>
+</resources>

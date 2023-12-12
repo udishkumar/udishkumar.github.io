@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">FindMyProduct!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_title">SEARCH</string>
+    <string name="no_items_wishlist">No items in Wishlist</string>
+    <string name="facebook_text">#CSCI571Fall23AndroidApp</string>
+    <string name="no_records">No Results Found</string>
+    <string name="wishlist_title">WISH LIST</string>
+    <string name="tvKeyword">Keyword</string>
+    <string name="tvKeywordErrorMsg">Please enter mandatory field</string>
+    <string name="tvKeywordErrorToastMsg">Please fix all fields with errors</string>
+    <string name="tvKeywordHint">Enter Keyword</string>
+    <string name="tvCategory">Category</string>
+    <string name="tvCondition">Condition</string>
+    <string name="tvConditionNew">New</string>
+    <string name="tvConditionUsed">Used</string>
+    <string name="tvConditionUnspecified">Unspecified</string>
+    <string name="tvShippingOptions">Shipping Options</string>
+    <string name="tvShippingOptionsLocal">Local Pickup</string>
+    <string name="tvShippingOptionsFree">Free Shipping</string>
+    <string name="tvEnableNearbySearch">Enable Nearby Search</string>
+    <string name="btnSearch">SEARCH</string>
+    <string name="btnClear">CLEAR</string>
+    <string name="tvDistance">Distance</string>
+    <string name="tvDistanceHint">Miles from</string>
+    <string name="tvDistanceFrom">From</string>
+    <string name="radioCurrentLocation">Current Location</string>
+    <string name="etZipCodeHint">zipcode</string>
+    <string name="searchingProductsProgress">Searching Products ...</string>
+    <string name="fetchingProductDetails">Fetching Product Details ...</string>
+
+    <string name="sold_by">Sold By</string>
+    <string name="store_name">Store Name</string>
+    <string name="feedback_score">Feedback Score</string>
+    <string name="popularity">Popularity</string>
+    <string name="feedback_star">Feedback Star</string>
+
+    <string name="shipping_info">Shipping Info</string>
+    <string name="shipping_cost">Shipping Cost</string>
+    <string name="global_shipping">Global Shipping</string>
+    <string name="handling_time">Handling Time</string>
+
+
+    <string name="return_policy">Return Policy</string>
+    <string name="policy">Policy</string>
+    <string name="returns_within">Returns Within</string>
+    <string name="refund_mode">Refund Mode</string>
+    <string name="shipped_by">Shipped By</string>
+
+    <string-array name="category_array">
+        <item>All</item>
+        <item>Art</item>
+        <item>Baby</item>
+        <item>Books</item>
+        <item>Clothing, Shoes and Accessories</item>
+        <item>Computer, Tablets &amp; Network</item>
+        <item>Health &amp; Beauty</item>
+        <item>Music</item>
+        <item>Video, Games &amp; Consoles</item>
+    </string-array>
+
+    <string-array name="sort_by">
+        <item>Default</item>
+        <item>Name</item>
+        <item>Price</item>
+        <item>Days</item>
+<!--        <item>Shipping Cost</item>-->
+    </string-array>
+
+    <string-array name="sort_order">
+        <item>Ascending</item>
+        <item>Descending</item>
+    </string-array>
+</resources>

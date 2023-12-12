@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="350dp">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.denzcoskun.imageslider.ImageSlider
+            android:id="@+id/image_slider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:iss_auto_cycle="false"
+            app:iss_delay="3500"
+            app:iss_no_dots="true"
+            app:iss_period="3500"
+            app:iss_placeholder="@drawable/placeholder"
+            app:iss_error_image="@drawable/placeholder"
+            app:iss_text_align="CENTER" />
+    </androidx.cardview.widget.CardView>
+</FrameLayout>
+
+
+
