@@ -1,6 +1,0 @@
-runtime: nodejs18
-
-handlers:
-- url: /
-  static_files: dist/udishkumar-hw3/index.html
-  upload: dist/udishkumar-hw3/index.html
