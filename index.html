@@ -353,6 +353,9 @@
         .timeline-item:nth-child(2) { animation-delay: 0.2s; }
         .timeline-item:nth-child(3) { animation-delay: 0.3s; }
         .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(5) { animation-delay: 0.5s; }
+        .timeline-item:nth-child(6) { animation-delay: 0.6s; }
+        .timeline-item:nth-child(7) { animation-delay: 0.7s; }
 
         @keyframes fadeInLeft {
             from {
@@ -484,8 +487,14 @@
         /* Projects Section */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .project-card {
@@ -706,10 +715,6 @@
                 left: -1.5rem;
             }
 
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
             .skills-grid {
                 grid-template-columns: 1fr;
             }
@@ -783,7 +788,7 @@
                 <h1>Udish Kumar</h1>
                 <p class="subtitle">Senior Software Engineer</p>
                 <p class="description">
-                    Building scalable cloud-native applications with 5+ years of expertise in microservices, 
+                    Building scalable cloud-native applications with 6+ years of expertise in microservices, 
                     data platforms, and AI/ML integration. USC Computer Science graduate passionate about 
                     creating impactful solutions.
                 </p>
@@ -793,7 +798,7 @@
                         <div class="stat-label">Revenue Impact</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-number">5+</div>
+                        <div class="stat-number">6+</div>
                         <div class="stat-label">Years Experience</div>
                     </div>
                     <div class="stat">
@@ -837,10 +842,10 @@
             
             <div style="max-width: 800px; margin: 0 auto; text-align: center; line-height: 1.8; color: var(--text);">
                 <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
-                    As a Senior Software Engineer with a Master's from USC, I bring a unique blend of 
+                    As a Senior Software Engineer with 6+ years of experience and a Master's from USC, I bring a unique blend of 
                     technical expertise and business acumen to every project. My journey from building 
-                    enterprise integration platforms at Software AG to architecting cloud-native solutions 
-                    at startups has equipped me with a comprehensive understanding of the full software 
+                    enterprise integration platforms at Cognizant and Software AG to architecting cloud-native solutions 
+                    at PwC and NTT DATA has equipped me with a comprehensive understanding of the full software 
                     development lifecycle.
                 </p>
                 <p style="font-size: 1.1rem;">
@@ -857,7 +862,7 @@
     <section id="experience" class="section" style="background: white;">
         <div class="container">
             <h2 class="section-title">Professional Experience</h2>
-            <p class="section-subtitle">Building Enterprise-Grade Solutions Across Industries</p>
+            <p class="section-subtitle">6+ Years Building Enterprise-Grade Solutions Across Industries</p>
             
             <div class="timeline">
                 <div class="timeline-item">
@@ -900,6 +905,36 @@
                                 <i class="fas fa-check-circle"></i>
                                 <span>Designed gRPC/Protocol Buffers contracts reducing serialization overhead by 70%</span>
                             </div>
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Implemented CI/CD with GitHub Actions, reducing Play Store deployment time by 90%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <div class="company-header">
+                            <div class="company-info">
+                                <h3>Software Engineer Intern</h3>
+                                <div class="company-name">SoFiiT</div>
+                            </div>
+                            <div class="timeline-date">May 2024 - Jul 2024</div>
+                        </div>
+                        <div class="timeline-description">
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Built MVVM-based workout application with integrated analytics, improving user retention by 20%</span>
+                            </div>
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Implemented secure OTP phone authentication via Firebase Auth, securing onboarding for 10K+ daily users</span>
+                            </div>
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Integrated Firestore for offline-first data sync, reducing data-sync latency by 40%</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -920,7 +955,37 @@
                             </div>
                             <div class="achievement">
                                 <i class="fas fa-check-circle"></i>
-                                <span>Built Operational Data Store integrating multiple data sources, reducing data latency from hours to minutes</span>
+                                <span>Built Operational Data Store (ODS) integrating ResourceGuru, Greenhouse, Zoho via Django + AWS, saving $75K/year</span>
+                            </div>
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Mentored 5 junior engineers on cloud-native development, improving team delivery velocity by 30%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <div class="company-header">
+                            <div class="company-info">
+                                <h3>Senior Associate</h3>
+                                <div class="company-name">PricewaterhouseCoopers LLP</div>
+                            </div>
+                            <div class="timeline-date">Apr 2021 - Oct 2021</div>
+                        </div>
+                        <div class="timeline-description">
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Designed enterprise data platform framework on webMethods DBP, accelerating development delivery by 30% and saving $50K/year</span>
+                            </div>
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Implemented encrypted API payloads and secure data flows, reducing security incidents by 40%</span>
+                            </div>
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Deployed comprehensive OAuth 2.0 authentication, reducing configuration errors by 70% and saving 120 hours/year</span>
                             </div>
                         </div>
                     </div>
@@ -943,6 +1008,36 @@
                             <div class="achievement">
                                 <i class="fas fa-check-circle"></i>
                                 <span>Eliminated 98% SLA breaches, averting $80K in penalties through platform optimization</span>
+                            </div>
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Implemented automated testing for 250+ REST services, increasing coverage by 30% and reducing manual QA by 90%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <div class="company-header">
+                            <div class="company-info">
+                                <h3>Developer Trainee</h3>
+                                <div class="company-name">Cognizant</div>
+                            </div>
+                            <div class="timeline-date">Oct 2016 - Nov 2018</div>
+                        </div>
+                        <div class="timeline-description">
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Built 50+ data integration interfaces achieving 35% reliability improvement and 40% latency reduction</span>
+                            </div>
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Configured Universal Messaging pub-sub architecture, reducing message delivery latency by 30%</span>
+                            </div>
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Implemented comprehensive testing framework achieving 90% coverage and 60% fewer post-production defects</span>
                             </div>
                         </div>
                     </div>
@@ -1042,6 +1137,34 @@
                         <div class="project-links">
                             <a href="https://pragya.up.railway.app/" target="_blank" class="project-link">
                                 <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            💬
+                        </div>
+                        <h3 class="project-title">RAG FAQ System</h3>
+                        <p class="project-subtitle">Intelligent Q&A Platform</p>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">
+                            Implemented RAG backend with LlamaIndex & OpenAI APIs for intelligent FAQ retrieval. 
+                            Built concurrent PDF pipeline and Streamlit web UI, achieving 80%+ answer accuracy 
+                            and reducing info-retrieval time by 75%.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-badge">Python</span>
+                            <span class="tech-badge">LlamaIndex</span>
+                            <span class="tech-badge">OpenAI</span>
+                            <span class="tech-badge">Streamlit</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link" style="cursor: not-allowed; opacity: 0.7;">
+                                <i class="fas fa-code"></i> View Code
                             </a>
                         </div>
                     </div>
