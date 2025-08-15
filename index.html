@@ -1,333 +1,1325 @@
 <!DOCTYPE html>
-<!-- upto 2 directory depth-->
-<html lang="en-US">
-  <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Udish Kumar</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700;800&amp;display=swap"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700;800&amp;display=swap" media="print" onload="this.media='all'"/>
-    <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700;800&amp;display=swap"/>
-    </noscript>
-    <link href="./css/font-awesome/css/all.min.css?ver=1.2.0" rel="stylesheet">
-    <link href="./css/bootstrap-icons/bootstrap-icons.css?ver=1.2.0" rel="stylesheet">
-    <link href="./css/bootstrap.min.css?ver=1.2.0" rel="stylesheet">
-    <link href="./css/aos.css?ver=1.2.0" rel="stylesheet">
-    <link href="./css/main.css?ver=1.2.0" rel="stylesheet">
-    <noscript>
-      <style type="text/css">
-        [data-aos] {
-            opacity: 1 !important;
-            transform: translate(0) scale(1) !important;
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Udish Kumar - Senior Software Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-      </style>
-    </noscript>
-  </head>
-  <body id="top">
-    <header class="bg-light">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header-nav" role="navigation">
-        <div class="container"><img src="images/favicon-16x16.png" alt="Home page icon"/><a class="link-dark navbar-brand site-title mb-0" href="#">dish Kumar</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto me-2">
-              <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-              <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-              <li class="nav-item"><a class="nav-link" href="#Projects">Projects</a></li>
-              <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
-              <li class="nav-item"><a class="nav-link" href="#resume">Resume</a></li>
-              <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #0f172a;
+            --dark-secondary: #1e293b;
+            --light: #f8fafc;
+            --text: #64748b;
+            --border: #e2e8f0;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            background: var(--light);
+            overflow-x: hidden;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 2rem 4rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(60px); }
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1rem;
+            animation: slideUp 0.6s ease;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1rem;
+            animation: slideUp 0.8s ease;
+        }
+
+        .hero-content .description {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            animation: slideUp 1s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 2rem;
+            animation: slideUp 1.2s ease;
+        }
+
+        .stat {
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            animation: slideUp 1.4s ease;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .hero-visual {
+            position: relative;
+            animation: float-slow 6s ease-in-out infinite;
+        }
+
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .code-window {
+            background: var(--dark);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        .code-header {
+            background: var(--dark-secondary);
+            padding: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .code-dot:nth-child(1) { background: #ff5f56; }
+        .code-dot:nth-child(2) { background: #ffbd2e; }
+        .code-dot:nth-child(3) { background: #27c93f; }
+
+        .code-content {
+            padding: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: #64d86b;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .code-line {
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: typeIn 0.5s ease forwards;
+        }
+
+        .code-line:nth-child(1) { animation-delay: 0.5s; }
+        .code-line:nth-child(2) { animation-delay: 0.7s; }
+        .code-line:nth-child(3) { animation-delay: 0.9s; }
+        .code-line:nth-child(4) { animation-delay: 1.1s; }
+        .code-line:nth-child(5) { animation-delay: 1.3s; }
+
+        @keyframes typeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* About Section */
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* Experience Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInLeft 0.6s ease forwards;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 0 4px white, 0 0 0 6px var(--primary);
+        }
+
+        .timeline-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .company-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .company-info h3 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .company-name {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .timeline-date {
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        .timeline-description {
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .achievement {
+            display: flex;
+            align-items: start;
+            margin-bottom: 0.75rem;
+        }
+
+        .achievement i {
+            color: var(--secondary);
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-category h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+        }
+
+        .project-icon {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+        }
+
+        .project-body {
+            padding: 2rem;
+        }
+
+        .project-description {
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-badge {
+            padding: 0.25rem 0.75rem;
+            background: var(--light);
+            color: var(--primary);
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            flex: 1;
+            padding: 0.75rem;
+            text-align: center;
+            background: var(--gradient-1);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Contact Section */
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        .testimonials-grid {
+            animation: fadeIn 0.8s ease;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            margin: 2rem 0;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .contact-item i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-1);
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark);
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .timeline {
+                padding-left: 1rem;
+            }
+
+            .timeline-item::before {
+                left: -1.5rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .testimonials-grid {
+                margin-left: -1rem;
+                margin-right: -1rem;
+            }
+            
+            .testimonial-card {
+                padding: 1.5rem !important;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .slide-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideIn 0.6s ease forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">UK</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
-          </div>
+            <button class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
-      </nav>
-    </header>
-    <div class="page-content">
-      <div id="content">
-<header>
-  <div class="cover bg-light">
-    <div class="container px-3">
-      <div class="row">
-        <div class="col-lg-6 p-2"><img class="img-fluid" src="images/coder1.gif" alt="hello"/></div>
-        <div class="col-lg-6">
-          <div class="mt-5">
-            <p class="lead text-uppercase mb-1"><img src="images/hello.gif" alt="Animated Greeting"></p>
-            <h1 class="intro-title marker" data-aos="fade-left" data-aos-delay="50">I’m Udish Kumar</h1>
-            <p class="lead fw-normal mt-3" data-aos="fade-up" data-aos-delay="100">Experienced Software Professional and Graduate Student at University of Southern California(USC)</p>
-            <div class="social-nav" data-aos="fade-up" data-aos-delay="200">
-              <nav role="navigation">
-                <ul class="nav justify-content-left">
-                  <li class="nav-item"><a class="nav-link" href="https://twitter.com/kumar_udish" title="Twitter"><i class="fab fa-twitter"></i><span class="menu-title sr-only">Twitter</span></a></li>
-                  <li class="nav-item"><a class="nav-link" href="https://www.facebook.com/iudishkumar" title="Facebook"><i class="fab fa-facebook"></i><span class="menu-title sr-only">Facebook</span></a></li>
-                  <li class="nav-item"><a class="nav-link" href="https://www.instagram.com/iudishkumar" title="Instagram"><i class="fab fa-instagram"></i><span class="menu-title sr-only">Instagram</span></a></li>
-                  <li class="nav-item"><a class="nav-link" href="https://www.linkedin.com/in/iudishkumar" title="LinkedIn"><i class="fab fa-linkedin"></i><span class="menu-title sr-only">LinkedIn</span></a></li>
-                </ul>
-              </nav>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Udish Kumar</h1>
+                <p class="subtitle">Senior Software Engineer</p>
+                <p class="description">
+                    Building scalable cloud-native applications with 5+ years of expertise in microservices, 
+                    data platforms, and AI/ML integration. USC Computer Science graduate passionate about 
+                    creating impactful solutions.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">$3.2M+</div>
+                        <div class="stat-label">Revenue Impact</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">70%</div>
+                        <div class="stat-label">Performance Gains</div>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="https://drive.google.com/uc?id=1ztHiatUVtOELsGQho7bRNy2NcBH1Bo7y" download class="btn btn-primary">
+                        <i class="fas fa-download"></i> Download Resume
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <i class="fas fa-envelope"></i> Get In Touch
+                    </a>
+                </div>
             </div>
-            <div class="mt-3" data-aos="fade-up" data-aos-delay="200"><a class="btn btn-primary shadow-sm mt-1 hover-effect" href="#contact">Get In Touch <i class="fas fa-arrow-right"></i></a></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="wave-bg"></div>
-</header>
-<div class="section pt-4 px-3 px-lg-4" id="about">
-  <div class="container-narrow">
-    <div class="row">
-      <div class="col-md-6">
-        <h2 class="h4 my-2">Hello! I’m Udish Kumar.</h2>
-        <p>As a dynamic and inventive Software Engineer with a rich tapestry of experiences at NTT Data and Software AG, I, Udish Kumar, bring a fusion of technical prowess and strategic thinking to the tech world. Armed with a Master's from USC in Computer Science and an impressive track record of enhancing system efficiencies by up to 70%, I am not just a coder, but a problem solver who breathes life into data and algorithms. My diverse skill set ranges from Python to Java, underpinned by a deep understanding of web technologies and a passion for innovation. Whether leading teams, optimizing workflows, or penning influential tech articles, my approach is always forward-thinking and results-oriented. Let's transform challenges into opportunities and ideas into realities!</p>
-        <div class="row mt-3">
-          <div class="col-sm-2">
-            <div class="pb-1">Age:</div>
-          </div>
-          <div class="col-sm-10">
-            <div class="pb-1 fw-bolder">29</div>
-          </div>
-          <div class="col-sm-2">
-            <div class="pb-1">Email:</div>
-          </div>
-          <div class="col-sm-10">
-            <div class="pb-1 fw-bolder">udishkumar1994@gmail.com</div>
-          </div>
-          <!-- <div class="col-sm-2">
-            <div class="pb-1">Skype:</div>
-          </div> -->
-          <!-- <div class="col-sm-10">
-            <div class="pb-1 fw-bolder">username@skype.com</div>
-          </div> -->
-          <div class="col-sm-2">
-            <div class="pb-1">Phone:</div>
-          </div>
-          <div class="col-sm-10">
-            <div class="pb-1 fw-bolder">+1(213)272-3355</div>
-          </div>
-          <div class="col-sm-2">
-            <div class="pb-1">Address:</div>
-          </div>
-          <div class="col-sm-10">
-            <div class="pb-1 fw-bolder">California, United States</div>
-          </div>
-          <div class="col-sm-2">
-            <div class="pb-1">Status:</div>
-          </div>
-          <div class="col-sm-10">
-            <div class="pb-1 fw-bolder">Available</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-5 offset-md-1" data-aos="fade-left" data-aos-delay="100"><img class="avatar img-fluid mt-2" src="images/avatar.jpg" width="400" height="400" alt="Walter Patterson"/></div>
-    </div>
-  </div>
-</div>
-<div class="section px-3 px-lg-4 pt-5" id="services">
-  <div class="container-narrow">
-    <div class="text-center mb-5">
-      <h2 class="marker marker-center">My Services</h2>
-    </div>
-    <div class="text-center">
-      <p class="mx-auto mb-3" style="max-width:600px"> Envision a digital world where innovation meets precision - that's where I, Udish Kumar, thrive. Specializing in elevating websites and apps to their zenith, I blend cutting-edge computer science expertise from USC with real-world acumen honed at NTT Data and Software AG. My toolbox is brimming with skills in Python, Java, and web technologies, enabling me to swiftly optimize and deliver projects in real-time environments. With a track record of boosting system performance by up to 70%, I don't just develop software; I craft digital experiences that resonate and transform.</p>
-    </div>
-    <div class="row py-3">
-      <div class="col-md-3 text-center" data-aos="fade-up" data-aos-delay="100"><img class="mb-2" src="images/services/web-design.svg" width="96" height="96" alt="web design"/>
-        <div class="h5">Software Development (Integration + Full Stack)</div>
-      </div>
-      <div class="col-md-3 text-center" data-aos="fade-up" data-aos-delay="200"><img class="mb-2" src="images/services/graphic-design.svg" width="96" height="96" alt="graphic design"/>
-        <div class="h5">Technical Architecture Design</div>
-      </div>
-      <div class="col-md-3 text-center" data-aos="fade-up" data-aos-delay="300"><img class="mb-2" src="images/services/ui-ux.svg" width="96" height="96" alt="ui-ux"/>
-        <div class="h5">Product Design, Development and Management</div>
-      </div>
-      <div class="col-md-3 text-center" data-aos="fade-up" data-aos-delay="400"><img class="mb-2" src="images/services/app-development.svg" width="96" height="96" alt="app development"/>
-        <div class="h5">Mobile Application Development</div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="section px-2 px-lg-4 pt-5" id="Projects">
-  <div class="container">
-    <div class="text-center mb-5">
-      <h2 class="marker marker-center">Projects </h2>
-    </div>
-    <div class="grid bp-gallery pb-3" data-aos="zoom-in-up" data-aos-delay="100">
-      <div class="grid-sizer"></div>
-      <div class="grid-item"><a href="https://play.google.com/store/apps/details?id=com.udish.ebaysearch">
-        <figure class="portfolio-item">
-          <a href="https://play.google.com/store/apps/details?id=com.udish.ebaysearch" target="_blank">
-              <img src="images/appdev3.gif" alt="Code GIF" data-caption="Example of an optional caption."/>
-          </a>
-          <figcaption> 
-              <h4 class="h5 mb-0">FindMyProduct Android App</h4>
-              <div>Kotlin, NodeJS</div>
-          </figcaption>
-        </figure></a></div>
-      <div class="grid-item"><a href="https://smartshoprr.netlify.app/">
-        <figure class="portfolio-item">
-          <a href="https://smartshoprr.netlify.app/" target="_blank">
-              <img src="images/website.gif" alt="Code GIF" data-caption="Example of an optional caption."/>
-          </a>
-          <figcaption> 
-              <h4 class="h5 mb-0">FindMyProduct Website</h4>
-              <div>Angular14, NodeJS, Typescript, CSS</div>
-          </figcaption>
-        </figure></a></div>
-      <div class="grid-item"><a href="https://myfirstpython-3979650766.wl.r.appspot.com">
-        <figure class="portfolio-item">
-          <a href="https://myfirstpython-3979650766.wl.r.appspot.com" target="_blank">
-              <img src="images/python.gif" alt="Code GIF" data-caption="Example of an optional caption."/>
-          </a>
-          <figcaption> 
-              <h4 class="h5 mb-0">Product Search Portal</h4>
-              <div>HTML, CSS, Flask, Vanilla JavaScript</div>
-          </figcaption>
-        </figure></a></div>
-    </div>
-  </div>
-</div>
-<div class="section px-3 px-lg-4 pt-5" id="experience">
-  <div class="container-narrow">
-    <div class="text-center mb-5">
-      <h2 class="marker marker-center">Professional Experience</h2>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="card mb-3" data-aos="fade-left" data-aos-delay="300">
-          <div class="card-header px-3 py-2">
-            <div class="d-flex justify-content-between">
-              <div>
-                <h3 class="h5 mb-1">Associate Software Consultant</h3>
-                <div class="text-muted text-small">Software AG Bangalore Technologies Pvt. Ltd.<small>(December 2018 - March 2021)</small></div>
-              </div><img src="images/sag.jpg" width="48" height="48" alt="app development"/>
+            <div class="hero-visual">
+                <div class="code-window">
+                    <div class="code-header">
+                        <div class="code-dot"></div>
+                        <div class="code-dot"></div>
+                        <div class="code-dot"></div>
+                    </div>
+                    <div class="code-content">
+                        <div class="code-line">const engineer = {</div>
+                        <div class="code-line">  name: "Udish Kumar",</div>
+                        <div class="code-line">  skills: ["Python", "Java", "React", "AWS"],</div>
+                        <div class="code-line">  passion: "Building scalable solutions",</div>
+                        <div class="code-line">};</div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="card-body px-3 py-2">
-            <p>In my tenure at Software AG, I managed over 150 critical application APIs for a major Hong Kong insurance company, earning Spot and Pat on the Back awards for punctuality and accountability. My responsibilities included traveling to Hong Kong for REST API and web service design, revamping technical issue resolution protocols, and enhancing Quality Assurance processes, resulting in a high SLA achievement rate.</p>
-          </div>  
         </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card mb-3" data-aos="fade-left" data-aos-delay="400">
-          <div class="card-header px-3 py-2">
-            <div class="d-flex justify-content-between">
-              <div>
-                <h3 class="h5 mb-1">Lead Software Engineer</h3>
-                <div class="text-muted text-small">NTT Data Services<small>(November 2021- December 2022)</small></div>
-              </div><img src="images/ntt.svg" width="48" height="48" alt="full stack"/>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <p class="section-subtitle">Transforming Ideas into Scalable Solutions</p>
+            
+            <div style="max-width: 800px; margin: 0 auto; text-align: center; line-height: 1.8; color: var(--text);">
+                <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+                    As a Senior Software Engineer with a Master's from USC, I bring a unique blend of 
+                    technical expertise and business acumen to every project. My journey from building 
+                    enterprise integration platforms at Software AG to architecting cloud-native solutions 
+                    at startups has equipped me with a comprehensive understanding of the full software 
+                    development lifecycle.
+                </p>
+                <p style="font-size: 1.1rem;">
+                    I specialize in building scalable microservices, implementing AI/ML solutions, and 
+                    optimizing data platforms. With a track record of delivering $3.2M+ in revenue impact 
+                    and achieving up to 70% performance improvements, I'm passionate about creating 
+                    technology that makes a real difference.
+                </p>
             </div>
-          </div>
-          <div class="card-body px-3 py-2">
-            <p>As a Lead Software Engineer at NTT Data, I was pivotal in designing an Operational Data Store that improved data flow and utilization by 50%. My significant contribution included migrating the company website's careers page webservice from MuleSoft to Python, which enhanced performance by 70%. I also received the Kokua award for my dedication and accountability in redesigning internal utilities for work anniversaries and birthdays using Python.</p>
-          </div>  
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="section px-3 px-lg-4 pt-5" id="testimonials">
-  <div class="container-narrow">
-    <div class="text-center mb-5">
-      <h2 class="marker marker-center">Testimonials</h2>
-    </div>
-    <div class="row"> 
-      <div class="col-md-6 mb-5" data-aos="fade-right" data-aos-delay="100">
-        <div class="d-flex ms-md-3"><span><i class="fas fa-2x fa-quote-left"></i></span><span class="m-2">Udish is a highly motivated individual who always seeks to learn new things and keep himself updated on emerging technologies. He has a developer's mind and focuses on the intricacies of design solutions for optimized customer experience. Being a perfectionist, he ensures that deliverables are well planned and communications are effective. My experience with Udish as a team mate has been pleasant as he is very comfortable to interact with and always ready to help. Looking forward to more work adventures with you!</span></div>
-        <div class="d-flex justify-content-end align-items-end">
-          <div class="text-end me-2">
-            <div class="fw-bolder">Tumpa</div>
-            <div class="text-small">Senior Consultant, Software AG</div>
-          </div><img class="me-md-3 rounded" src="images/tumpa.jpeg" width="96" height="96" alt="client 1"/>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section" style="background: white;">
+        <div class="container">
+            <h2 class="section-title">Professional Experience</h2>
+            <p class="section-subtitle">Building Enterprise-Grade Solutions Across Industries</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <div class="company-header">
+                            <div class="company-info">
+                                <h3>Full Stack Engineer</h3>
+                                <div class="company-name">Sumeru Inc</div>
+                            </div>
+                            <div class="timeline-date">Jan 2025 - Jun 2025</div>
+                        </div>
+                        <div class="timeline-description">
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Designed secure payment platform integration with Razorpay achieving 99% transaction reliability and generating $3.2M annual revenue</span>
+                            </div>
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Migrated WordPress to Next.js cloud-native architecture, reducing page-load times by 40% and cutting hosting costs by $98K/year</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <div class="company-header">
+                            <div class="company-info">
+                                <h3>Software Engineer (Co-op)</h3>
+                                <div class="company-name">Tikr Media Inc</div>
+                            </div>
+                            <div class="timeline-date">Aug 2024 - Dec 2024</div>
+                        </div>
+                        <div class="timeline-description">
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Built Android application using Kotlin and MVVM architecture, expanding platform reach by 45% and unlocking $500K annual revenue</span>
+                            </div>
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Designed gRPC/Protocol Buffers contracts reducing serialization overhead by 70%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <div class="company-header">
+                            <div class="company-info">
+                                <h3>Lead Engineer</h3>
+                                <div class="company-name">NTT DATA</div>
+                            </div>
+                            <div class="timeline-date">Nov 2021 - Dec 2022</div>
+                        </div>
+                        <div class="timeline-description">
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Architected FastAPI microservices on AWS replacing legacy ESB, improving API throughput by 60% and eliminating $150K/year licensing costs</span>
+                            </div>
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Built Operational Data Store integrating multiple data sources, reducing data latency from hours to minutes</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <div class="company-header">
+                            <div class="company-info">
+                                <h3>Associate Software Engineer</h3>
+                                <div class="company-name">Software AG</div>
+                            </div>
+                            <div class="timeline-date">Dec 2018 - Mar 2021</div>
+                        </div>
+                        <div class="timeline-description">
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Delivered scalable data integration interfaces for major insurance client, improving system throughput by 45%</span>
+                            </div>
+                            <div class="achievement">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Eliminated 98% SLA breaches, averting $80K in penalties through platform optimization</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-md-6 mb-5" data-aos="fade-left" data-aos-delay="300">
-        <div class="d-flex ms-md-3"><span><i class="fas fa-2x fa-quote-left"></i></span><span class="m-2">Udish joined my team 3+ years back for an international Insurance company; with his immense knowledge over the subject and skilled abilities in his work. He has been an enthusiastic, inspiring and motivating consultant. He has strong dedication and takes incredible initiative to do work effectively and efficiently. He can solve problems fast and has introduced various new initiatives for improvement. In addition, he is eager to learn new technologies. He studied API Management Suite and docker technology himself and through on-the-job practices and became an expert now. Last but not least, he always extends his support to his teammate in troubleshooting, bug fixing and so on.</span></div>
-        <div class="d-flex justify-content-end align-items-end">
-          <div class="text-end me-2">
-            <div class="fw-bolder">Tony</div>
-            <div class="text-small">Director, Software AG North Asia</div>
-          </div><img class="me-md-3 rounded" src="images/tony.jpeg" width="96" height="96" alt="client 1"/>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="section-title">Technical Expertise</h2>
+            <p class="section-subtitle">Full-Stack Development & Cloud Architecture</p>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3><i class="fas fa-code"></i> Languages & Frameworks</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Kotlin</span>
+                        <span class="skill-tag">FastAPI</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Next.js</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="fas fa-cloud"></i> Cloud & DevOps</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">GCP</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">CI/CD</span>
+                        <span class="skill-tag">GitHub Actions</span>
+                        <span class="skill-tag">Jenkins</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="fas fa-database"></i> Data & Storage</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">DynamoDB</span>
+                        <span class="skill-tag">Redis</span>
+                        <span class="skill-tag">ChromaDB</span>
+                        <span class="skill-tag">Vector Databases</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="fas fa-brain"></i> AI/ML & Search</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Claude API</span>
+                        <span class="skill-tag">OpenAI</span>
+                        <span class="skill-tag">LlamaIndex</span>
+                        <span class="skill-tag">HuggingFace</span>
+                        <span class="skill-tag">Vector Search</span>
+                        <span class="skill-tag">RAG Systems</span>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-md-6 mb-5" data-aos="fade-right" data-aos-delay="200">
-        <div class="d-flex ms-md-3"><span><i class="fas fa-2x fa-quote-left"></i></span><span class="m-2">I had the pleasure to work with Udish for several months, as he was providing support for one of our programs. He showed great enthusiasm and provided outstanding support as well as gave great advice, going the extra mile to guarantee smooth operation. Thank you for your hard work and all the best!</span></div>
-        <div class="d-flex justify-content-end align-items-end">
-          <div class="text-end me-2">
-            <div class="fw-bolder">Fabian</div>
-            <div class="text-small">Senior Project Manager, Amplify Health (AIA-Discovery JV)</div>
-          </div><img class="me-md-3 rounded" src="images/Fabian.jpeg" width="96" height="96" alt="client 1"/>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section" style="background: white;">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <p class="section-subtitle">Innovative Solutions Powered by Modern Technology</p>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            🤖
+                        </div>
+                        <h3 class="project-title">P.R.A.G.Y.A.</h3>
+                        <p class="project-subtitle">Agentic RAG Assistant</p>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">
+                            Distributed multi-source RAG system with intelligent query routing between document 
+                            retrieval and web search. Achieved 85% reduction in incomplete answers with sub-2s 
+                            retrieval using Claude API, ChromaDB, and LlamaIndex.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-badge">Python</span>
+                            <span class="tech-badge">LlamaIndex</span>
+                            <span class="tech-badge">Claude API</span>
+                            <span class="tech-badge">ChromaDB</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://pragya.up.railway.app/" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            📊
+                        </div>
+                        <h3 class="project-title">CryptoBoard</h3>
+                        <p class="project-subtitle">Real-time Crypto Dashboard</p>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">
+                            Modular Express.js backend with optimized data structures and caching. Reduced API 
+                            latency by 60% using cache-aside pattern and parallelized fetches, cutting processing 
+                            time by 50%.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-badge">Node.js</span>
+                            <span class="tech-badge">Express.js</span>
+                            <span class="tech-badge">Redis</span>
+                            <span class="tech-badge">Railway</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://cryptoboard-frontend.onrender.com/" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            📱
+                        </div>
+                        <h3 class="project-title">FindMyProduct</h3>
+                        <p class="project-subtitle">Android Shopping App</p>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">
+                            Native Android application built with Kotlin and MVVM architecture. Integrated eBay 
+                            API for real-time product search with MongoDB backend for wishlist management. 
+                            Increased user engagement by 30%.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-badge">Kotlin</span>
+                            <span class="tech-badge">MVVM</span>
+                            <span class="tech-badge">Node.js</span>
+                            <span class="tech-badge">MongoDB</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://play.google.com/store/apps/details?id=com.udish.ebaysearch" target="_blank" class="project-link">
+                                <i class="fab fa-google-play"></i> View on Play Store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-md-6 mb-5" data-aos="fade-left" data-aos-delay="400">
-        <div class="d-flex ms-md-3"><span><i class="fas fa-2x fa-quote-left"></i></span><span class="m-2">One of the values on our engineering team is “constant improvement,” and I’ve never seen anyone embrace and embody that philosophy like Udish. During the past year we’ve worked together, I’ve watched him constantly look for new challenges to tackle, whether it’s migrating technology single handedly for the company website’s career page or writing a python script to generate internal anniversary emails. He’s also always the first to jump in if newer members of the team run into issues. I’ve loved my experience working with Udish, and any company or team that needs a proven Technical Lead with a get-it-done-with-a-smile approach, Udish is your guy.</span></div>
-        <div class="d-flex justify-content-end align-items-end">
-          <div class="text-end me-2">
-            <div class="fw-bolder">Pallavi</div>
-            <div class="text-small">VP, Head of Internal IT and Information Security, NTT Data</div>
-          </div><img class="me-md-3 rounded" src="images/pallavi.png" width="96" height="96" alt="client 1"/>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section" style="background: white;">
+        <div class="container">
+            <h2 class="section-title">Testimonials</h2>
+            <p class="section-subtitle">What Colleagues Say About Working With Me</p>
+            
+            <div class="testimonials-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                
+                <div class="testimonial-card" style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); position: relative;">
+                    <div style="position: absolute; top: 1rem; left: 1.5rem; font-size: 3rem; color: var(--primary); opacity: 0.2;">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p style="color: var(--text); line-height: 1.8; margin-bottom: 2rem; padding-top: 1rem;">
+                        Udish is a highly motivated individual who always seeks to learn new things and keep himself updated on emerging technologies. He has a developer's mind and focuses on the intricacies of design solutions for optimized customer experience. Being a perfectionist, he ensures that deliverables are well planned and communications are effective. My experience with Udish as a team mate has been pleasant as he is very comfortable to interact with and always ready to help. Looking forward to more work adventures with you!
+                    </p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
+                            T
+                        </div>
+                        <div>
+                            <div style="font-weight: 700; color: var(--dark);">Tumpa</div>
+                            <div style="font-size: 0.9rem; color: var(--text);">Senior Consultant, Software AG</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card" style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); position: relative;">
+                    <div style="position: absolute; top: 1rem; left: 1.5rem; font-size: 3rem; color: var(--primary); opacity: 0.2;">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p style="color: var(--text); line-height: 1.8; margin-bottom: 2rem; padding-top: 1rem;">
+                        Udish joined my team 3+ years back for an international Insurance company; with his immense knowledge over the subject and skilled abilities in his work. He has been an enthusiastic, inspiring and motivating consultant. He has strong dedication and takes incredible initiative to do work effectively and efficiently. He can solve problems fast and has introduced various new initiatives for improvement. In addition, he is eager to learn new technologies. He studied API Management Suite and docker technology himself and through on-the-job practices and became an expert now.
+                    </p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
+                            T
+                        </div>
+                        <div>
+                            <div style="font-weight: 700; color: var(--dark);">Tony</div>
+                            <div style="font-size: 0.9rem; color: var(--text);">Director, Software AG North Asia</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card" style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); position: relative;">
+                    <div style="position: absolute; top: 1rem; left: 1.5rem; font-size: 3rem; color: var(--primary); opacity: 0.2;">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p style="color: var(--text); line-height: 1.8; margin-bottom: 2rem; padding-top: 1rem;">
+                        I had the pleasure to work with Udish for several months, as he was providing support for one of our programs. He showed great enthusiasm and provided outstanding support as well as gave great advice, going the extra mile to guarantee smooth operation. Thank you for your hard work and all the best!
+                    </p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
+                            F
+                        </div>
+                        <div>
+                            <div style="font-weight: 700; color: var(--dark);">Fabian</div>
+                            <div style="font-size: 0.9rem; color: var(--text);">Senior Project Manager, Amplify Health (AIA-Discovery JV)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card" style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); position: relative;">
+                    <div style="position: absolute; top: 1rem; left: 1.5rem; font-size: 3rem; color: var(--primary); opacity: 0.2;">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p style="color: var(--text); line-height: 1.8; margin-bottom: 2rem; padding-top: 1rem;">
+                        One of the values on our engineering team is "constant improvement," and I've never seen anyone embrace and embody that philosophy like Udish. During the past year we've worked together, I've watched him constantly look for new challenges to tackle, whether it's migrating technology single handedly for the company website's career page or writing a python script to generate internal anniversary emails. He's also always the first to jump in if newer members of the team run into issues. I've loved my experience working with Udish!
+                    </p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
+                            P
+                        </div>
+                        <div>
+                            <div style="font-weight: 700; color: var(--dark);">Pallavi</div>
+                            <div style="font-size: 0.9rem; color: var(--text);">VP, Head of Internal IT and Information Security, NTT Data</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="section pt-4 px-3 px-lg-4" id="resume">
-  <div class="container-narrow">
-    <h2 class="h4 my-2">Resume</h2>
-    <a href="https://drive.google.com/uc?id=1ztHiatUVtOELsGQho7bRNy2NcBH1Bo7y" download class="btn btn-primary mt-3">Download</a>    
-  </div>
-</div>
-<div class="section px-2 px-lg-4 pb-4 pt-5 mb-5" id="contact">
-  <div class="container-narrow">
-    <div class="text-center mb-5">
-      <h2 class="marker marker-center">Contact Me</h2>
-    </div>
-   <div class="mt-3 px-1">
-     <div class="h5">Let’s have a coffee chat!</div>
-     <p>Driven by an insatiable hunger for crafting cool tech, my adventure through the tech universe has been epic.<br> 
-      Kicking off at NTT Data, diving deep into the tech trenches, and then leveling up at Software AG, each chapter has been a wild <br>
-      ride. All this tech wizardry is grounded in some serious Computer Science chops from USC, blending the nuts and bolts of tech <br>
-      with a dash of creative magic. This mix is my secret sauce for cooking up innovations that not only work like a charm but also <br>
-      have that wow factor.<br>
-      <br>
-      <br>
-      Got a project that needs a sprinkle of creativity and a heap of technical know-how? Or just wanna chat about the latest in tech<br> 
-      over a virtual coffee? Hit me up at udishkum@usc.edu. Let's make something awesome together!</p>
-     <a href = "mailto: udishkum@usc.edu">udishkum@usc.edu</a>
-   </div>
- </div>
-  </div>
-</div>
-<footer class="pt-4 pb-4 text-center bg-light">
-  <div class="container">
-    <div class="my-3">
-      <div class="h4">Udish Kumar</div>
-      <p>MEAN & Full Stack Developer</p>
-      <div class="social-nav">
-        <nav role="navigation">
-          <ul class="nav justify-content-center">
-            <li class="nav-item"><a class="nav-link" href="https://twitter.com/kumar_udish" title="Twitter"><i class="fab fa-twitter"></i><span class="menu-title sr-only">Twitter</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="https://www.facebook.com/iudishkumar" title="Facebook"><i class="fab fa-facebook"></i><span class="menu-title sr-only">Facebook</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="https://www.instagram.com/iudishkumar" title="Instagram"><i class="fab fa-instagram"></i><span class="menu-title sr-only">Instagram</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="https://www.linkedin.com/in/iudishkumar" title="LinkedIn"><i class="fab fa-linkedin"></i><span class="menu-title sr-only">LinkedIn</span></a></li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-    <div class="text-small text-secondary">
-      <div class="mb-1">&copy; Udish Kumar. All rights reserved.</div>
-      <div>
-    </div>
-  </div>
-</footer></div>
-    </div>
-    <div id="scrolltop"><a class="btn btn-secondary" href="#top"><span class="icon"><i class="fas fa-angle-up fa-x"></i></span></a></div>
-    <script src="./scripts/imagesloaded.pkgd.min.js?ver=1.2.0"></script>
-    <script src="./scripts/masonry.pkgd.min.js?ver=1.2.0"></script>
-    <script src="./scripts/BigPicture.min.js?ver=1.2.0"></script>
-    <script src="./scripts/purecounter.min.js?ver=1.2.0"></script>
-    <script src="./scripts/bootstrap.bundle.min.js?ver=1.2.0"></script>
-    <script src="./scripts/aos.min.js?ver=1.2.0"></script>
-    <script src="./scripts/main.js?ver=1.2.0"></script>
-  </body>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section" style="background: var(--light);">
+        <div class="container">
+            <h2 class="section-title">Let's Connect</h2>
+            <p class="section-subtitle">Ready to Build Something Amazing Together?</p>
+            
+            <div class="contact-content">
+                <p style="font-size: 1.1rem; color: var(--text); margin-bottom: 2rem;">
+                    I'm always excited to discuss new opportunities, innovative projects, and technical challenges. 
+                    Whether you need a full-stack developer, a cloud architect, or someone to lead your next 
+                    technical initiative, let's talk!
+                </p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:udishkum@usc.edu" style="color: var(--primary); text-decoration: none;">udishkum@usc.edu</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+1 (213) 272-3355</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>San Francisco, CA</span>
+                    </div>
+                </div>
+                
+                <div class="social-links">
+                    <a href="https://linkedin.com/in/iudishkumar" target="_blank" class="social-link">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/iudishkumar" target="_blank" class="social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://twitter.com/kumar_udish" target="_blank" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="mailto:udishkum@usc.edu" class="social-link">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Udish Kumar. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuToggle?.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            navLinks.style.position = 'absolute';
+            navLinks.style.top = '100%';
+            navLinks.style.left = '0';
+            navLinks.style.right = '0';
+            navLinks.style.background = 'white';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.padding = '1rem';
+            navLinks.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.skill-category, .project-card, .testimonial-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Add typing animation to hero text
+        const heroText = document.querySelector('.hero-content h1');
+        if (heroText) {
+            const text = heroText.textContent;
+            heroText.textContent = '';
+            let i = 0;
+            const typeWriter = () => {
+                if (i < text.length) {
+                    heroText.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                }
+            };
+            setTimeout(typeWriter, 500);
+        }
+    </script>
+</body>
 </html>
