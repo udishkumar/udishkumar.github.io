@@ -3,1449 +3,791 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Udish Kumar - Software Engineer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <title>Udish Kumar - Developer Console</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #10b981;
-            --dark: #0f172a;
-            --dark-secondary: #1e293b;
-            --light: #f8fafc;
-            --text: #64748b;
-            --border: #e2e8f0;
-            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            color: var(--dark);
-            background: var(--light);
-            overflow-x: hidden;
-        }
-
-        .mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        nav.scrolled {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 8rem 2rem 4rem;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            animation: float 20s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(60px); }
-        }
-
-        .hero-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: white;
-            margin-bottom: 1rem;
-            animation: slideUp 0.6s ease;
-        }
-
-        .hero-content .subtitle {
-            font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 1rem;
-            animation: slideUp 0.8s ease;
-        }
-
-        .hero-content .description {
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 2rem;
-            line-height: 1.6;
-            animation: slideUp 1s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 3rem;
-            margin-bottom: 2rem;
-            animation: slideUp 1.2s ease;
-        }
-
-        .stat {
-            color: white;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 800;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            animation: slideUp 1.4s ease;
-        }
-
-        .btn {
-            padding: 0.75rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-primary {
-            background: white;
-            color: var(--primary);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid white;
-        }
-
-        .btn-secondary:hover {
-            background: white;
-            color: var(--primary);
-        }
-
-        .hero-visual {
-            position: relative;
-            animation: float-slow 6s ease-in-out infinite;
-        }
-
-        @keyframes float-slow {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .code-window {
-            background: var(--dark);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
-        }
-
-        .code-header {
-            background: var(--dark-secondary);
-            padding: 1rem;
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .code-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .code-dot:nth-child(1) { background: #ff5f56; }
-        .code-dot:nth-child(2) { background: #ffbd2e; }
-        .code-dot:nth-child(3) { background: #27c93f; }
-
-        .code-content {
-            padding: 1.5rem;
-            font-family: 'JetBrains Mono', monospace;
-            color: #64d86b;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .code-line {
-            margin-bottom: 0.5rem;
-            opacity: 0;
-            animation: typeIn 0.5s ease forwards;
-        }
-
-        .code-line:nth-child(1) { animation-delay: 0.5s; }
-        .code-line:nth-child(2) { animation-delay: 0.7s; }
-        .code-line:nth-child(3) { animation-delay: 0.9s; }
-        .code-line:nth-child(4) { animation-delay: 1.1s; }
-        .code-line:nth-child(5) { animation-delay: 1.3s; }
-
-        @keyframes typeIn {
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* About Section */
-        .section {
-            padding: 5rem 2rem;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            text-align: center;
-            margin-bottom: 1rem;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--text);
-            margin-bottom: 3rem;
-            font-size: 1.1rem;
-        }
-
-        /* Experience Timeline */
-        .timeline {
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: var(--border);
-        }
-
-        .timeline-item {
-            position: relative;
-            padding-bottom: 3rem;
-            opacity: 0;
-            animation: fadeInLeft 0.6s ease forwards;
-        }
-
-        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
-        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
-        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
-        .timeline-item:nth-child(4) { animation-delay: 0.4s; }
-        .timeline-item:nth-child(5) { animation-delay: 0.5s; }
-        .timeline-item:nth-child(6) { animation-delay: 0.6s; }
-        .timeline-item:nth-child(7) { animation-delay: 0.7s; }
-
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -2.5rem;
-            top: 0.5rem;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--primary);
-            box-shadow: 0 0 0 4px white, 0 0 0 6px var(--primary);
-        }
-
-        .timeline-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .timeline-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
-        .company-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 1rem;
-        }
-
-        .company-info h3 {
-            font-size: 1.3rem;
-            color: var(--dark);
-            margin-bottom: 0.25rem;
-        }
-
-        .company-name {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .timeline-date {
-            color: var(--text);
-            font-size: 0.9rem;
-        }
-
-        .timeline-description {
-            color: var(--text);
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .achievement {
-            display: flex;
-            align-items: start;
-            margin-bottom: 0.75rem;
-        }
-
-        .achievement i {
-            color: var(--secondary);
-            margin-right: 0.75rem;
-            margin-top: 0.25rem;
-        }
-
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .skill-category {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .skill-category:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
-        .skill-category h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .skill-tag {
-            padding: 0.5rem 1rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .skill-tag:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Projects Section */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-        }
-
-        @media (max-width: 900px) {
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .project-card {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .project-header {
-            padding: 2rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            position: relative;
-        }
-
-        .project-icon {
-            width: 60px;
-            height: 60px;
-            background: white;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .project-title {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .project-subtitle {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.9rem;
-        }
-
-        .project-body {
-            padding: 2rem;
-        }
-
-        .project-description {
-            color: var(--text);
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .tech-badge {
-            padding: 0.25rem 0.75rem;
-            background: var(--light);
-            color: var(--primary);
-            border-radius: 15px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .project-link {
-            flex: 1;
-            padding: 0.75rem;
-            text-align: center;
-            background: var(--gradient-1);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .project-link:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Contact Section */
-        .testimonial-card {
-            transition: all 0.3s ease;
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
-        }
-
-        .testimonials-grid {
-            animation: fadeIn 0.8s ease;
-        }
-
-        /* Contact Section */
-        .contact-content {
-            background: white;
-            padding: 3rem;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .contact-info {
-            margin: 2rem 0;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            color: var(--text);
-        }
-
-        .contact-item i {
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .social-link {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--gradient-1);
-            color: white;
-            border-radius: 50%;
-            text-decoration: none;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-
-        .social-link:hover {
-            transform: translateY(-5px) scale(1.1);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        /* Mobile Menu Toggle */
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--dark);
-            cursor: pointer;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            .hero-container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-visual {
-                display: none;
-            }
-
-            .hero-stats {
-                justify-content: center;
-            }
-
-            .hero-buttons {
-                justify-content: center;
-            }
-
-            .timeline {
-                padding-left: 1rem;
-            }
-
-            .timeline-item::before {
-                left: -1.5rem;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .testimonials-grid {
-                grid-template-columns: 1fr !important;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .testimonials-grid {
-                margin-left: -1rem;
-                margin-right: -1rem;
-            }
-            
-            .testimonial-card {
-                padding: 1.5rem !important;
-            }
-        }
-
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            animation: fadeIn 0.6s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
-
-        .slide-in {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: slideIn 0.6s ease forwards;
-        }
-
-        @keyframes slideIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <div class="logo">UK</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#testimonials">Testimonials</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <button class="mobile-menu-toggle">
-                <i class="fas fa-bars"></i>
-            </button>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-text">Initializing Developer Console...</div>
+        <div class="loading-bar">
+            <div class="loading-progress" id="loadingProgress"></div>
         </div>
-    </nav>
+    </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <h1>Udish Kumar</h1>
-                <p class="subtitle">Software Engineer</p>
-                <p class="description">
-                    Building scalable cloud-native applications with 6+ years of expertise in microservices, 
-                    data platforms, and AI/ML integration. USC Computer Science graduate passionate about 
-                    creating impactful solutions.
-                </p>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <div class="stat-number">$3.2M+</div>
-                        <div class="stat-label">Revenue Impact</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">6+</div>
-                        <div class="stat-label">Years Experience</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">70%</div>
-                        <div class="stat-label">Performance Gains</div>
-                    </div>
-                </div>
-                <div class="hero-buttons">
-                    <a href="https://drive.google.com/uc?id=1ztHiatUVtOELsGQho7bRNy2NcBH1Bo7y" download class="btn btn-primary">
-                        <i class="fas fa-download"></i> Download Resume
-                    </a>
-                    <a href="#contact" class="btn btn-secondary">
-                        <i class="fas fa-envelope"></i> Get In Touch
-                    </a>
-                </div>
+    <!-- Matrix Background -->
+    <canvas class="matrix-bg" id="matrixCanvas"></canvas>
+
+    <!-- Terminal Container -->
+    <div class="terminal">
+        <!-- Terminal Header -->
+        <div class="terminal-header">
+            <div class="terminal-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
             </div>
-            <div class="hero-visual">
-                <div class="code-window">
-                    <div class="code-header">
-                        <div class="code-dot"></div>
-                        <div class="code-dot"></div>
-                        <div class="code-dot"></div>
-                    </div>
-                    <div class="code-content">
-                        <div class="code-line">const engineer = {</div>
-                        <div class="code-line">  name: "Udish Kumar",</div>
-                        <div class="code-line">  skills: ["Python", "Java", "React", "AWS"],</div>
-                        <div class="code-line">  passion: "Building scalable solutions",</div>
-                        <div class="code-line">};</div>
-                    </div>
-                </div>
+            <div class="terminal-title">udish@portfolio:~$ whoami</div>
+            <div class="terminal-controls">
+                <button class="control-btn" onclick="toggleFullscreen()">⛶</button>
+                <button class="control-btn" onclick="minimizeTerminal()">−</button>
+                <button class="control-btn" onclick="closeTerminal()">×</button>
             </div>
         </div>
-    </section>
 
-    <!-- About Section -->
-    <section id="about" class="section">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <p class="section-subtitle">Transforming Ideas into Scalable Solutions</p>
-            
-            <div style="max-width: 800px; margin: 0 auto; text-align: center; line-height: 1.8; color: var(--text);">
-                <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
-                    As a Software Engineer with 6+ years of experience and a Master's from USC, I bring a unique blend of 
-                    technical expertise and business acumen to every project. My journey from building 
-                    enterprise integration platforms at Cognizant and Software AG to architecting cloud-native solutions 
-                    at PwC and NTT DATA has equipped me with a comprehensive understanding of the full software 
-                    development lifecycle.
-                </p>
-                <p style="font-size: 1.1rem;">
-                    I specialize in building scalable microservices, implementing AI/ML solutions, and 
-                    optimizing data platforms. With a track record of delivering $3.2M+ in revenue impact 
-                    and achieving up to 70% performance improvements, I'm passionate about creating 
-                    technology that makes a real difference.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Experience Section -->
-    <section id="experience" class="section" style="background: white;">
-        <div class="container">
-            <h2 class="section-title">Professional Experience</h2>
-            <p class="section-subtitle">6+ Years Building Enterprise-Grade Solutions Across Industries</p>
-            
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-card">
-                        <div class="company-header">
-                            <div class="company-info">
-                                <h3>Full Stack Engineer</h3>
-                                <div class="company-name">Sumeru Inc</div>
-                            </div>
-                            <div class="timeline-date">Jan 2025 - Jun 2025</div>
-                        </div>
-                        <div class="timeline-description">
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Designed secure payment platform integration with Razorpay achieving 99% transaction reliability and generating $3.2M annual revenue</span>
-                            </div>
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Migrated WordPress to Next.js cloud-native architecture, reducing page-load times by 40% and cutting hosting costs by $98K/year</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-card">
-                        <div class="company-header">
-                            <div class="company-info">
-                                <h3>Software Engineer (Co-op)</h3>
-                                <div class="company-name">Tikr Media Inc</div>
-                            </div>
-                            <div class="timeline-date">Aug 2024 - Dec 2024</div>
-                        </div>
-                        <div class="timeline-description">
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Built Android application using Kotlin and MVVM architecture, expanding platform reach by 45% and unlocking $500K annual revenue</span>
-                            </div>
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Designed gRPC/Protocol Buffers contracts reducing serialization overhead by 70%</span>
-                            </div>
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Implemented CI/CD with GitHub Actions, reducing Play Store deployment time by 90%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-card">
-                        <div class="company-header">
-                            <div class="company-info">
-                                <h3>Software Engineer Intern</h3>
-                                <div class="company-name">SoFiiT</div>
-                            </div>
-                            <div class="timeline-date">May 2024 - Jul 2024</div>
-                        </div>
-                        <div class="timeline-description">
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Built MVVM-based workout application with integrated analytics, improving user retention by 20%</span>
-                            </div>
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Implemented secure OTP phone authentication via Firebase Auth, securing onboarding for 10K+ daily users</span>
-                            </div>
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Integrated Firestore for offline-first data sync, reducing data-sync latency by 40%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-card">
-                        <div class="company-header">
-                            <div class="company-info">
-                                <h3>Lead Engineer</h3>
-                                <div class="company-name">NTT DATA</div>
-                            </div>
-                            <div class="timeline-date">Nov 2021 - Dec 2022</div>
-                        </div>
-                        <div class="timeline-description">
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Architected FastAPI microservices on AWS replacing legacy ESB, improving API throughput by 60% and eliminating $150K/year licensing costs</span>
-                            </div>
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Built Operational Data Store (ODS) integrating ResourceGuru, Greenhouse, Zoho via Django + AWS, saving $75K/year</span>
-                            </div>
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Mentored 5 junior engineers on cloud-native development, improving team delivery velocity by 30%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-card">
-                        <div class="company-header">
-                            <div class="company-info">
-                                <h3>Senior Associate</h3>
-                                <div class="company-name">PricewaterhouseCoopers LLP</div>
-                            </div>
-                            <div class="timeline-date">Apr 2021 - Oct 2021</div>
-                        </div>
-                        <div class="timeline-description">
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Designed enterprise data platform framework on webMethods DBP, accelerating development delivery by 30% and saving $50K/year</span>
-                            </div>
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Implemented encrypted API payloads and secure data flows, reducing security incidents by 40%</span>
-                            </div>
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Deployed comprehensive OAuth 2.0 authentication, reducing configuration errors by 70% and saving 120 hours/year</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-card">
-                        <div class="company-header">
-                            <div class="company-info">
-                                <h3>Associate Software Engineer</h3>
-                                <div class="company-name">Software AG</div>
-                            </div>
-                            <div class="timeline-date">Dec 2018 - Mar 2021</div>
-                        </div>
-                        <div class="timeline-description">
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Delivered scalable data integration interfaces for major insurance client, improving system throughput by 45%</span>
-                            </div>
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Eliminated 98% SLA breaches, averting $80K in penalties through platform optimization</span>
-                            </div>
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Implemented automated testing for 250+ REST services, increasing coverage by 30% and reducing manual QA by 90%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-card">
-                        <div class="company-header">
-                            <div class="company-info">
-                                <h3>Developer Trainee</h3>
-                                <div class="company-name">Cognizant</div>
-                            </div>
-                            <div class="timeline-date">Oct 2016 - Nov 2018</div>
-                        </div>
-                        <div class="timeline-description">
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Built 50+ data integration interfaces achieving 35% reliability improvement and 40% latency reduction</span>
-                            </div>
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Configured Universal Messaging pub-sub architecture, reducing message delivery latency by 30%</span>
-                            </div>
-                            <div class="achievement">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Implemented comprehensive testing framework achieving 90% coverage and 60% fewer post-production defects</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="section">
-        <div class="container">
-            <h2 class="section-title">Technical Expertise</h2>
-            <p class="section-subtitle">Full-Stack Development & Cloud Architecture</p>
-            
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3><i class="fas fa-code"></i> Languages & Frameworks</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">Kotlin</span>
-                        <span class="skill-tag">FastAPI</span>
-                        <span class="skill-tag">Node.js</span>
-                        <span class="skill-tag">React</span>
-                        <span class="skill-tag">Next.js</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3><i class="fas fa-cloud"></i> Cloud & DevOps</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">AWS</span>
-                        <span class="skill-tag">GCP</span>
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">Kubernetes</span>
-                        <span class="skill-tag">CI/CD</span>
-                        <span class="skill-tag">GitHub Actions</span>
-                        <span class="skill-tag">Jenkins</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3><i class="fas fa-database"></i> Data & Storage</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">PostgreSQL</span>
-                        <span class="skill-tag">MongoDB</span>
-                        <span class="skill-tag">DynamoDB</span>
-                        <span class="skill-tag">Redis</span>
-                        <span class="skill-tag">ChromaDB</span>
-                        <span class="skill-tag">Vector Databases</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3><i class="fas fa-brain"></i> AI/ML & Search</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Claude API</span>
-                        <span class="skill-tag">OpenAI</span>
-                        <span class="skill-tag">LlamaIndex</span>
-                        <span class="skill-tag">HuggingFace</span>
-                        <span class="skill-tag">Vector Search</span>
-                        <span class="skill-tag">RAG Systems</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="section" style="background: white;">
-        <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
-            <p class="section-subtitle">Innovative Solutions Powered by Modern Technology</p>
-            
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            🤖
-                        </div>
-                        <h3 class="project-title">P.R.A.G.Y.A.</h3>
-                        <p class="project-subtitle">Autonomous Learning Agent with Multi-Strategy Decision Architecture</p>
-                    </div>
-                    <div class="project-body">
-                        <p class="project-description">
-                            Built self-learning system using experience memory datastructures and pattern matching algorithms achieving 30% relevance improvement 
-                            through strategy reuse; implemented dynamic threshold adaptation via performance-based feedback loops (success rate × time decay) 
-                            optimizing retrieval precision. Developed goal persistence using state machines and subtask decomposition enabling cross-session objective 
-                            tracking; integrated Claude API with adaptive prompting strategies based on learned user preferences. Achieved 92% autonomous decision 
-                            accuracy through ChromaDB semantic search, confidence-weighted tool selection, and self-evaluation mechanisms with persistent learning 
-                            across 100+ conversation sessions.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-badge">Python</span>
-                            <span class="tech-badge">LlamaIndex</span>
-                            <span class="tech-badge">Claude API</span>
-                            <span class="tech-badge">ChromaDB</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://pragya.up.railway.app/" target="_blank" class="project-link">
-                                <i class="fas fa-external-link-alt"></i> Live Demo
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            💬
-                        </div>
-                        <h3 class="project-title">RAG FAQ System</h3>
-                        <p class="project-subtitle">Intelligent Q&A Platform</p>
-                    </div>
-                    <div class="project-body">
-                        <p class="project-description">
-                            Implemented RAG backend with LlamaIndex & OpenAI APIs for intelligent FAQ retrieval. 
-                            Built concurrent PDF pipeline and Streamlit web UI, achieving 80%+ answer accuracy 
-                            and reducing info-retrieval time by 75%.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-badge">Python</span>
-                            <span class="tech-badge">LlamaIndex</span>
-                            <span class="tech-badge">OpenAI</span>
-                            <span class="tech-badge">Streamlit</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link" style="cursor: not-allowed; opacity: 0.7;">
-                                <i class="fas fa-code"></i> View Code
-                            </a>
-                        </div>
-                    </div>
-                </div> -->
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            📊
-                        </div>
-                        <h3 class="project-title">CryptoBoard</h3>
-                        <p class="project-subtitle">Real-time Crypto Dashboard</p>
-                    </div>
-                    <div class="project-body">
-                        <p class="project-description">
-                            Sentiment analysis dashboard for all(reddit, NYTimes, Guardian) data cryptocurrency. Designed modular Express.js backend with data structures 
-                            optimization (API/service/data layers); cache-aside with Node Cache (1h TTL) and scheduled fetches cut median API latency 60%. Parallelized paginated 
-                            fetches with Promise.all + retries to cut processing time 50% and external API failures 90%. Hosted on Railway/AWS.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-badge">Node.js</span>
-                            <span class="tech-badge">Express.js</span>
-                            <span class="tech-badge">Redis</span>
-                            <span class="tech-badge">Railway</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://cryptoboard-frontend.onrender.com/" target="_blank" class="project-link">
-                                <i class="fas fa-external-link-alt"></i> Live Demo
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            📱
-                        </div>
-                        <h3 class="project-title">FindMyProduct</h3>
-                        <p class="project-subtitle">Android Shopping App</p>
-                    </div>
-                    <div class="project-body">
-                        <p class="project-description">
-                            Built Kotlin Android app (RecyclerView, MVVM) integrating eBay Finding API for real-time product search & wishlists. 
-                            Deployed Node.js backend on GCP using eBay SDK; reduced API response time 25%. Added MongoDB CRUD for wishlist mgmt and 
-                            Facebook SDK sharing (↑ user engagement 30%).
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-badge">Kotlin</span>
-                            <span class="tech-badge">MVVM</span>
-                            <span class="tech-badge">Node.js</span>
-                            <span class="tech-badge">MongoDB</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://play.google.com/store/apps/details?id=com.udish.ebaysearch" target="_blank" class="project-link">
-                                <i class="fab fa-google-play"></i> View on Play Store
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="section" style="background: white;">
-        <div class="container">
-            <h2 class="section-title">Testimonials</h2>
-            <p class="section-subtitle">What Colleagues Say About Working With Me</p>
-            
-            <div class="testimonials-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-top: 3rem;">
-                
-                <div class="testimonial-card" style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); position: relative;">
-                    <div style="position: absolute; top: 1rem; left: 1.5rem; font-size: 3rem; color: var(--primary); opacity: 0.2;">
-                        <i class="fas fa-quote-left"></i>
-                    </div>
-                    <p style="color: var(--text); line-height: 1.8; margin-bottom: 2rem; padding-top: 1rem;">
-                        Udish is a highly motivated individual who always seeks to learn new things and keep himself updated on emerging technologies. He has a developer's mind and focuses on the intricacies of design solutions for optimized customer experience. Being a perfectionist, he ensures that deliverables are well planned and communications are effective. My experience with Udish as a team mate has been pleasant as he is very comfortable to interact with and always ready to help. Looking forward to more work adventures with you!
-                    </p>
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
-                            T
-                        </div>
-                        <div>
-                            <div style="font-weight: 700; color: var(--dark);">Tumpa</div>
-                            <div style="font-size: 0.9rem; color: var(--text);">Senior Consultant, Software AG</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card" style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); position: relative;">
-                    <div style="position: absolute; top: 1rem; left: 1.5rem; font-size: 3rem; color: var(--primary); opacity: 0.2;">
-                        <i class="fas fa-quote-left"></i>
-                    </div>
-                    <p style="color: var(--text); line-height: 1.8; margin-bottom: 2rem; padding-top: 1rem;">
-                        Udish joined my team 3+ years back for an international Insurance company; with his immense knowledge over the subject and skilled abilities in his work. He has been an enthusiastic, inspiring and motivating consultant. He has strong dedication and takes incredible initiative to do work effectively and efficiently. He can solve problems fast and has introduced various new initiatives for improvement. In addition, he is eager to learn new technologies. He studied API Management Suite and docker technology himself and through on-the-job practices and became an expert now.
-                    </p>
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
-                            T
-                        </div>
-                        <div>
-                            <div style="font-weight: 700; color: var(--dark);">Tony</div>
-                            <div style="font-size: 0.9rem; color: var(--text);">Director, Software AG North Asia</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card" style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); position: relative;">
-                    <div style="position: absolute; top: 1rem; left: 1.5rem; font-size: 3rem; color: var(--primary); opacity: 0.2;">
-                        <i class="fas fa-quote-left"></i>
-                    </div>
-                    <p style="color: var(--text); line-height: 1.8; margin-bottom: 2rem; padding-top: 1rem;">
-                        I had the pleasure to work with Udish for several months, as he was providing support for one of our programs. He showed great enthusiasm and provided outstanding support as well as gave great advice, going the extra mile to guarantee smooth operation. Thank you for your hard work and all the best!
-                    </p>
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
-                            F
-                        </div>
-                        <div>
-                            <div style="font-weight: 700; color: var(--dark);">Fabian</div>
-                            <div style="font-size: 0.9rem; color: var(--text);">Senior Project Manager, Amplify Health (AIA-Discovery JV)</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card" style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); position: relative;">
-                    <div style="position: absolute; top: 1rem; left: 1.5rem; font-size: 3rem; color: var(--primary); opacity: 0.2;">
-                        <i class="fas fa-quote-left"></i>
-                    </div>
-                    <p style="color: var(--text); line-height: 1.8; margin-bottom: 2rem; padding-top: 1rem;">
-                        One of the values on our engineering team is "constant improvement," and I've never seen anyone embrace and embody that philosophy like Udish. During the past year we've worked together, I've watched him constantly look for new challenges to tackle, whether it's migrating technology single handedly for the company website's career page or writing a python script to generate internal anniversary emails. He's also always the first to jump in if newer members of the team run into issues. I've loved my experience working with Udish!
-                    </p>
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
-                            P
-                        </div>
-                        <div>
-                            <div style="font-weight: 700; color: var(--dark);">Pallavi</div>
-                            <div style="font-size: 0.9rem; color: var(--text);">VP, Head of Internal IT and Information Security, NTT Data</div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="section" style="background: var(--light);">
-        <div class="container">
-            <h2 class="section-title">Let's Connect</h2>
-            <p class="section-subtitle">Ready to Build Something Amazing Together?</p>
-            
-            <div class="contact-content">
-                <p style="font-size: 1.1rem; color: var(--text); margin-bottom: 2rem;">
-                    I'm always excited to discuss new opportunities, innovative projects, and technical challenges. 
-                    Whether you need a full-stack developer, a cloud architect, or someone to lead your next 
-                    technical initiative, let's talk!
-                </p>
-                
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <a href="mailto:udishkum@usc.edu" style="color: var(--primary); text-decoration: none;">udishkum@usc.edu</a>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <span>+1 (213) 272-3355</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>San Francisco, CA</span>
-                    </div>
+        <!-- Terminal Body -->
+        <div class="terminal-body">
+            <!-- Hero Section -->
+            <div class="cli-section">
+                <div class="cli-prompt">
+                    <span class="prompt-symbol">➜</span>
+                    <span class="prompt-path">~/dev/portfolio</span>
+                    <span class="prompt-input">cat README.md</span>
                 </div>
                 
-                <div class="social-links">
-                    <a href="https://linkedin.com/in/iudishkumar" target="_blank" class="social-link">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="https://github.com/iudishkumar" target="_blank" class="social-link">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://twitter.com/kumar_udish" target="_blank" class="social-link">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="mailto:udishkum@usc.edu" class="social-link">
-                        <i class="fas fa-envelope"></i>
-                    </a>
+                <div class="cli-output">
+                    <div class="hero-section">
+                        <div class="hero-content">
+                            <h1 class="hero-title glitch">UDISH KUMAR</h1>
+                            <p class="hero-subtitle"># Software Engineer & Cloud Architect</p>
+                            <p style="color: var(--text-secondary); margin: 20px 0; line-height: 1.6;">
+                                Software Engineer with 6+ years specializing in enterprise integrations, payment systems, and AI/RAG 
+                                architectures. Proven expertise in building scalable APIs and microservices across AWS/GCP with deep 
+                                experience in webMethods DBP, middleware platforms, and modern cloud-native solutions.
+                            </p>
+                            
+                            <div class="hero-stats">
+                                <div class="stat-card">
+                                    <span class="stat-number">$3.2M+</span>
+                                    <span class="stat-label">Revenue Impact</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-number">6+</span>
+                                    <span class="stat-label">Years Experience</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-number">85%</span>
+                                    <span class="stat-label">RAG Failure Reduction</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="terminal-3d" id="terminal3d"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="cli-section">
+                <div class="cli-prompt">
+                    <span class="prompt-symbol">➜</span>
+                    <span class="prompt-path">~/dev/portfolio</span>
+                    <span class="prompt-input">ls -la</span>
+                </div>
+                
+                <div class="cli-output">
+                    <div class="nav-menu">
+                        <a href="#" class="nav-item active" onclick="showSection('about')">📄 about.md</a>
+                        <a href="#" class="nav-item" onclick="showSection('experience')">💼 experience.json</a>
+                        <a href="#" class="nav-item" onclick="showSection('skills')">⚡ skills.yml</a>
+                        <a href="#" class="nav-item" onclick="showSection('projects')">🚀 projects/</a>
+                        <a href="#" class="nav-item" onclick="showSection('education')">🎓 education.txt</a>
+                        <a href="#" class="nav-item" onclick="showSection('contact')">📞 contact.sh</a>
+                        <a href="https://drive.google.com/uc?id=1ztHiatUVtOELsGQho7bRNy2NcBH1Bo7y" class="nav-item" target="_blank">📋 resume.pdf</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Section -->
+            <div id="about" class="content-section active">
+                <div class="cli-section">
+                    <div class="cli-prompt">
+                        <span class="prompt-symbol">➜</span>
+                        <span class="prompt-path">~/dev/portfolio</span>
+                        <span class="prompt-input">cat about.md</span>
+                    </div>
+                    
+                    <div class="cli-output">
+                        <h2 style="color: var(--accent-primary); margin-bottom: 20px;"># About Me</h2>
+                        <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 15px;">
+                            Software Engineer with 6+ years specializing in enterprise integrations, payment systems, and AI/RAG 
+                            architectures. Proven expertise in building scalable APIs and microservices across AWS/GCP with deep 
+                            experience in webMethods DBP, middleware platforms, and modern cloud-native solutions.
+                        </p>
+                        <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 15px;">
+                            Strong track record in mobile development (Android/Kotlin) and intelligent information retrieval systems 
+                            using vector databases and LLM integration. Delivered $3.2M+ revenue impact through payment integrations, 
+                            $500K+ cost savings via platform migrations, and 85% reduction in information retrieval failures through 
+                            distributed RAG implementations.
+                        </p>
+                        <p style="color: var(--text-secondary); line-height: 1.8;">
+                            Currently pursuing advanced opportunities in cloud-native development, AI/ML integration, and scalable 
+                            system architecture, bringing both technical expertise and business impact to every project.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experience Section -->
+            <div id="experience" class="content-section">
+                <div class="cli-section">
+                    <div class="cli-prompt">
+                        <span class="prompt-symbol">➜</span>
+                        <span class="prompt-path">~/dev/portfolio</span>
+                        <span class="prompt-input">cat experience.json | jq '.'</span>
+                    </div>
+                    
+                    <div class="cli-output">
+                        <div class="experience-grid">
+                            <div class="exp-card">
+                                <div class="exp-header">
+                                    <div>
+                                        <div class="exp-title">Full Stack Engineer</div>
+                                        <div class="exp-company">Sumeru Inc</div>
+                                    </div>
+                                    <div class="exp-date">Jan 2025 - Jun 2025</div>
+                                </div>
+                                <ul class="exp-achievements">
+                                    <li>Designed and implemented Razorpay payment and webhook integrations with AWS-hosted Next.js frontend and Node.js backend; achieved 99% transaction reliability and generated $3.2M in incremental annual revenue</li>
+                                    <li>Migrated WordPress to Next.js; reduced page-load times 40%, cut hosting costs $98K/yr, and increased organic traffic 30%</li>
+                                </ul>
+                            </div>
+
+                            <div class="exp-card">
+                                <div class="exp-header">
+                                    <div>
+                                        <div class="exp-title">Software Engineer (Co-op)</div>
+                                        <div class="exp-company">Tikr Media Inc</div>
+                                    </div>
+                                    <div class="exp-date">Aug 2024 - Dec 2024</div>
+                                </div>
+                                <ul class="exp-achievements">
+                                    <li>Built Android counterpart to Series A iOS app using Kotlin, MVVM, and Clean Architecture; expanded platform reach 45% and unlocked $500K net annual revenue</li>
+                                    <li>Designed ProtoBuf contracts for createAccount, signin, AuthWithToken; published to Buf Schema Registry and reduced serialization overhead 70%</li>
+                                    <li>Set up GitHub Actions with sprint-aligned branching; cut Play Store deployment time 90%</li>
+                                </ul>
+                            </div>
+
+                            <div class="exp-card">
+                                <div class="exp-header">
+                                    <div>
+                                        <div class="exp-title">Software Engineer Intern</div>
+                                        <div class="exp-company">SoFiiT</div>
+                                    </div>
+                                    <div class="exp-date">May 2024 - Jul 2024</div>
+                                </div>
+                                <ul class="exp-achievements">
+                                    <li>Built MVVM-based workout-buddy app; integrated Google & Firebase Analytics to improve user retention 20%</li>
+                                    <li>Implemented OTP phone auth and .edu email restriction via Firebase Auth; secured onboarding for 10K+ daily users</li>
+                                    <li>Integrated Firestore for offline-first sync; reduced data-sync latency 40%</li>
+                                </ul>
+                            </div>
+
+                            <div class="exp-card">
+                                <div class="exp-header">
+                                    <div>
+                                        <div class="exp-title">Lead Engineer</div>
+                                        <div class="exp-company">NTT DATA</div>
+                                    </div>
+                                    <div class="exp-date">Nov 2021 - Dec 2022</div>
+                                </div>
+                                <ul class="exp-achievements">
+                                    <li>Replaced MuleSoft ESB with FastAPI microservices on AWS; eliminated $150K/yr licensing and improved API throughput 60%</li>
+                                    <li>Integrated ResourceGuru, Greenhouse, Zoho via Django + AWS; reduced data latency from hours to minutes, improved data integrity 80%, saved $75K/yr</li>
+                                    <li>Implemented CI/CD pipelines with Git, Maven, Jenkins; enabled bi-weekly releases and reduced post-release defects 50%</li>
+                                </ul>
+                            </div>
+
+                            <div class="exp-card">
+                                <div class="exp-header">
+                                    <div>
+                                        <div class="exp-title">Senior Software Engineer</div>
+                                        <div class="exp-company">PricewaterhouseCoopers LLP</div>
+                                    </div>
+                                    <div class="exp-date">Apr 2021 - Oct 2021</div>
+                                </div>
+                                <ul class="exp-achievements">
+                                    <li>Built logging, caching, config mgmt, and PDF utilities framework on webMethods DBP; accelerated delivery 30%, saving $50K/yr</li>
+                                    <li>Implemented encrypted API payloads on webMethods IS with automated tests; reduced security incidents 40%, achieved 95% code coverage</li>
+                                    <li>Deployed OAuth 2.0 Auth Code, Client Credentials, ROPC; scripted token lifecycle to cut config errors 70% and save 120 hrs/yr</li>
+                                </ul>
+                            </div>
+
+                            <div class="exp-card">
+                                <div class="exp-header">
+                                    <div>
+                                        <div class="exp-title">Associate Software Engineer</div>
+                                        <div class="exp-company">Software AG</div>
+                                    </div>
+                                    <div class="exp-date">Dec 2018 - Mar 2021</div>
+                                </div>
+                                <ul class="exp-achievements">
+                                    <li>Delivered interfaces on webMethods DBP for major insurance client; improved throughput 45% and client satisfaction 20%</li>
+                                    <li>Configured API Gateway & Portal; reduced API deployment time 30%</li>
+                                    <li>Eliminated 98% SLA breaches (averted $80K penalties) and automated tests for 250+ REST services to raise coverage 30% and cut manual QA 90%</li>
+                                </ul>
+                            </div>
+
+                            <div class="exp-card">
+                                <div class="exp-header">
+                                    <div>
+                                        <div class="exp-title">Developer Trainee</div>
+                                        <div class="exp-company">Cognizant</div>
+                                    </div>
+                                    <div class="exp-date">Oct 2016 - Nov 2018</div>
+                                </div>
+                                <ul class="exp-achievements">
+                                    <li>Built 50+ interfaces (Flow/Java Services, SOAP/REST, flat-file); achieved +35% reliability, -40% latency</li>
+                                    <li>Configured Universal Messaging pub-sub to decouple systems and reduce delivery latency 30%</li>
+                                    <li>Implemented webMethods UTF & SOAP-UI with X.509; achieved 90% coverage and 60% fewer post-production defects</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills Section -->
+            <div id="skills" class="content-section">
+                <div class="cli-section">
+                    <div class="cli-prompt">
+                        <span class="prompt-symbol">➜</span>
+                        <span class="prompt-path">~/dev/portfolio</span>
+                        <span class="prompt-input">cat skills.yml</span>
+                    </div>
+                    
+                    <div class="cli-output">
+                        <div class="skills-matrix">
+                            <div class="skill-group">
+                                <h3 class="skill-title">
+                                    <i class="fas fa-code"></i>
+                                    Languages & Frameworks
+                                </h3>
+                                <div class="skill-list">
+                                    <span class="skill-tag">Python</span>
+                                    <span class="skill-tag">Java</span>
+                                    <span class="skill-tag">TypeScript</span>
+                                    <span class="skill-tag">JavaScript</span>
+                                    <span class="skill-tag">Kotlin</span>
+                                    <span class="skill-tag">FastAPI</span>
+                                    <span class="skill-tag">Django</span>
+                                    <span class="skill-tag">Node.js</span>
+                                    <span class="skill-tag">Express.js</span>
+                                    <span class="skill-tag">React</span>
+                                    <span class="skill-tag">Next.js</span>
+                                </div>
+                            </div>
+
+                            <div class="skill-group">
+                                <h3 class="skill-title">
+                                    <i class="fas fa-building"></i>
+                                    Enterprise Integration
+                                </h3>
+                                <div class="skill-list">
+                                    <span class="skill-tag">webMethods DBP</span>
+                                    <span class="skill-tag">MuleSoft ESB</span>
+                                    <span class="skill-tag">OAuth 2.0</span>
+                                    <span class="skill-tag">X.509 Security</span>
+                                    <span class="skill-tag">gRPC</span>
+                                    <span class="skill-tag">Protocol Buffers</span>
+                                    <span class="skill-tag">REST</span>
+                                    <span class="skill-tag">GraphQL</span>
+                                    <span class="skill-tag">SOAP</span>
+                                </div>
+                            </div>
+
+                            <div class="skill-group">
+                                <h3 class="skill-title">
+                                    <i class="fas fa-brain"></i>
+                                    AI/ML & RAG Systems
+                                </h3>
+                                <div class="skill-list">
+                                    <span class="skill-tag">ChromaDB</span>
+                                    <span class="skill-tag">Vector Databases</span>
+                                    <span class="skill-tag">Claude Sonnet-4</span>
+                                    <span class="skill-tag">OpenAI GPT-5</span>
+                                    <span class="skill-tag">HuggingFace</span>
+                                    <span class="skill-tag">LlamaIndex</span>
+                                    <span class="skill-tag">Semantic Search</span>
+                                    <span class="skill-tag">RAG Systems</span>
+                                    <span class="skill-tag">Prompt Engineering</span>
+                                </div>
+                            </div>
+
+                            <div class="skill-group">
+                                <h3 class="skill-title">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    Mobile Development
+                                </h3>
+                                <div class="skill-list">
+                                    <span class="skill-tag">Android SDK</span>
+                                    <span class="skill-tag">Kotlin</span>
+                                    <span class="skill-tag">MVVM Architecture</span>
+                                    <span class="skill-tag">RecyclerView</span>
+                                    <span class="skill-tag">Firebase</span>
+                                    <span class="skill-tag">Firestore</span>
+                                    <span class="skill-tag">Clean Architecture</span>
+                                </div>
+                            </div>
+
+                            <div class="skill-group">
+                                <h3 class="skill-title">
+                                    <i class="fas fa-cloud"></i>
+                                    Cloud & DevOps
+                                </h3>
+                                <div class="skill-list">
+                                    <span class="skill-tag">AWS</span>
+                                    <span class="skill-tag">GCP</span>
+                                    <span class="skill-tag">Docker</span>
+                                    <span class="skill-tag">Kubernetes</span>
+                                    <span class="skill-tag">GitHub Actions</span>
+                                    <span class="skill-tag">Jenkins</span>
+                                    <span class="skill-tag">CI/CD</span>
+                                </div>
+                            </div>
+
+                            <div class="skill-group">
+                                <h3 class="skill-title">
+                                    <i class="fas fa-database"></i>
+                                    Data & Storage
+                                </h3>
+                                <div class="skill-list">
+                                    <span class="skill-tag">PostgreSQL</span>
+                                    <span class="skill-tag">MongoDB</span>
+                                    <span class="skill-tag">DynamoDB</span>
+                                    <span class="skill-tag">Redis</span>
+                                    <span class="skill-tag">Firestore</span>
+                                    <span class="skill-tag">Node Cache</span>
+                                </div>
+                            </div>
+
+                            <div class="skill-group">
+                                <h3 class="skill-title">
+                                    <i class="fas fa-credit-card"></i>
+                                    Payment & APIs
+                                </h3>
+                                <div class="skill-list">
+                                    <span class="skill-tag">Razorpay</span>
+                                    <span class="skill-tag">Stripe</span>
+                                    <span class="skill-tag">PayPal</span>
+                                    <span class="skill-tag">eBay Finding API</span>
+                                    <span class="skill-tag">Google CSE API</span>
+                                    <span class="skill-tag">Webhooks</span>
+                                </div>
+                            </div>
+
+                            <div class="skill-group">
+                                <h3 class="skill-title">
+                                    <i class="fas fa-vial"></i>
+                                    Testing & Quality
+                                </h3>
+                                <div class="skill-list">
+                                    <span class="skill-tag">Postman/Newman</span>
+                                    <span class="skill-tag">JUnit</span>
+                                    <span class="skill-tag">webMethods UTF</span>
+                                    <span class="skill-tag">SOAP-UI</span>
+                                    <span class="skill-tag">OpenAPI/Swagger</span>
+                                    <span class="skill-tag">Automated Testing</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects Section -->
+            <div id="projects" class="content-section">
+                <div class="cli-section">
+                    <div class="cli-prompt">
+                        <span class="prompt-symbol">➜</span>
+                        <span class="prompt-path">~/dev/portfolio</span>
+                        <span class="prompt-input">ls projects/ -la</span>
+                    </div>
+                    
+                    <div class="cli-output">
+                        <div class="projects-grid">
+                            <div class="project-card">
+                                <div class="project-header">
+                                    <div class="project-icon">🤖</div>
+                                    <div>
+                                        <div class="project-title">P.R.A.G.Y.A.</div>
+                                        <div style="color: var(--text-secondary); font-size: 14px;">Agentic RAG Assistant with Intelligent Query Routing</div>
+                                    </div>
+                                </div>
+                                <p class="project-description">
+                                    Architected distributed multi-source RAG system using ChromaDB vector storage, HuggingFace embeddings, and Claude API 
+                                    with autonomous routing between document retrieval and web search based on relevance scoring. Implemented 7+ algorithms 
+                                    for detecting insufficient responses with automatic enrichment; achieved 85% reduction in incomplete answers and sub-2s retrieval.
+                                </p>
+                                <div class="project-tech">
+                                    <span class="tech-badge">Python</span>
+                                    <span class="tech-badge">LlamaIndex</span>
+                                    <span class="tech-badge">Claude API</span>
+                                    <span class="tech-badge">ChromaDB</span>
+                                    <span class="tech-badge">HuggingFace</span>
+                                    <span class="tech-badge">Google CSE API</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://pragya.up.railway.app/" target="_blank" class="project-link">
+                                        Live Demo
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="project-card">
+                                <div class="project-header">
+                                    <div class="project-icon">📊</div>
+                                    <div>
+                                        <div class="project-title">CryptoBoard Dashboard</div>
+                                        <div style="color: var(--text-secondary); font-size: 14px;">Real-time Crypto Sentiment Analysis</div>
+                                    </div>
+                                </div>
+                                <p class="project-description">
+                                    Designed modular Express.js backend with data structures optimization (API/service/data layers); 
+                                    cache-aside with Node Cache (1h TTL) and scheduled fetches cut median API latency 60%. Parallelized 
+                                    paginated fetches with Promise.all + retries to cut processing time 50% and external API failures 90%.
+                                </p>
+                                <div class="project-tech">
+                                    <span class="tech-badge">Node.js</span>
+                                    <span class="tech-badge">Express.js</span>
+                                    <span class="tech-badge">Node Cache</span>
+                                    <span class="tech-badge">Railway</span>
+                                    <span class="tech-badge">AWS</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://cryptoboard-frontend.onrender.com/" target="_blank" class="project-link">
+                                        Live Demo
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="project-card">
+                                <div class="project-header">
+                                    <div class="project-icon">📱</div>
+                                    <div>
+                                        <div class="project-title">FindMyProduct</div>
+                                        <div style="color: var(--text-secondary); font-size: 14px;">Android + Backend Shopping App</div>
+                                    </div>
+                                </div>
+                                <p class="project-description">
+                                    Built Kotlin Android app (RecyclerView, MVVM) integrating eBay Finding API for real-time product search & wishlists. 
+                                    Deployed Node.js backend on GCP using eBay SDK; reduced API response time 25%. Added MongoDB CRUD for wishlist 
+                                    management and Facebook SDK sharing, increasing user engagement 30%.
+                                </p>
+                                <div class="project-tech">
+                                    <span class="tech-badge">Kotlin</span>
+                                    <span class="tech-badge">MVVM</span>
+                                    <span class="tech-badge">RecyclerView</span>
+                                    <span class="tech-badge">Node.js</span>
+                                    <span class="tech-badge">MongoDB</span>
+                                    <span class="tech-badge">GCP</span>
+                                    <span class="tech-badge">eBay API</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://play.google.com/store/apps/details?id=com.udish.ebaysearch" target="_blank" class="project-link">
+                                        Play Store
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Education Section -->
+            <div id="education" class="content-section">
+                <div class="cli-section">
+                    <div class="cli-prompt">
+                        <span class="prompt-symbol">➜</span>
+                        <span class="prompt-path">~/dev/portfolio</span>
+                        <span class="prompt-input">cat education.txt</span>
+                    </div>
+                    
+                    <div class="cli-output">
+                        <h2 style="color: var(--accent-primary); margin-bottom: 20px;"># Education</h2>
+                        
+                        <div class="experience-grid">
+                            <div class="exp-card">
+                                <div class="exp-header">
+                                    <div>
+                                        <div class="exp-title">Master of Science in Computer Science</div>
+                                        <div class="exp-company">University of Southern California</div>
+                                    </div>
+                                    <div class="exp-date">Jan 2023 - Dec 2024</div>
+                                </div>
+                                <div style="color: var(--text-secondary); padding-left: 20px;">
+                                    <p>Los Angeles, CA</p>
+                                    <p style="margin-top: 10px;">Advanced coursework in distributed systems, machine learning, and software engineering</p>
+                                </div>
+                            </div>
+
+                            <div class="exp-card">
+                                <div class="exp-header">
+                                    <div>
+                                        <div class="exp-title">Bachelor of Technology in Computer Science & Engineering</div>
+                                        <div class="exp-company">Punjab Technical University</div>
+                                    </div>
+                                    <div class="exp-date">Aug 2012 - Jul 2016</div>
+                                </div>
+                                <div style="color: var(--text-secondary); padding-left: 20px;">
+                                    <p>Punjab, India</p>
+                                    <p style="margin-top: 10px;">Foundation in computer science principles, algorithms, and software development</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Section -->
+            <div id="contact" class="content-section">
+                <div class="cli-section">
+                    <div class="cli-prompt">
+                        <span class="prompt-symbol">➜</span>
+                        <span class="prompt-path">~/dev/portfolio</span>
+                        <span class="prompt-input">./contact.sh</span>
+                    </div>
+                    
+                    <div class="cli-output">
+                        <div class="contact-terminal">
+                            <h2 style="color: var(--accent-primary); margin-bottom: 20px;"># Let's Connect</h2>
+                            <p style="color: var(--text-secondary); margin-bottom: 20px; line-height: 1.6;">
+                                Ready to build something amazing together? I'm always excited to discuss new opportunities, 
+                                innovative projects, and technical challenges.
+                            </p>
+                            
+                            <div style="margin: 20px 0;">
+                                <div style="color: var(--text-secondary); margin: 10px 0;">
+                                    <i class="fas fa-envelope" style="color: var(--accent-primary); margin-right: 10px;"></i>
+                                    <a href="mailto:udishkum@usc.edu" style="color: var(--accent-primary); text-decoration: none;">udishkum@usc.edu</a>
+                                </div>
+                                <div style="color: var(--text-secondary); margin: 10px 0;">
+                                    <i class="fas fa-map-marker-alt" style="color: var(--accent-primary); margin-right: 10px;"></i>
+                                    Seattle, WA
+                                </div>
+                            </div>
+                            
+                            <div class="contact-links">
+                                <a href="https://linkedin.com/in/iudishkumar" target="_blank" class="contact-link">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                                <a href="https://github.com/iudishkumar" target="_blank" class="contact-link">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://twitter.com/kumar_udish" target="_blank" class="contact-link">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="mailto:udishkum@usc.edu" class="contact-link">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Udish Kumar. All rights reserved.</p>
-    </footer>
+    <!-- Scroll Hint -->
+    <div class="scroll-hint">
+        Use navigation menu to explore different sections
+    </div>
 
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+        // Loading Screen
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const loadingProgress = document.getElementById('loadingProgress');
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 30;
+                if (progress > 100) progress = 100;
+                loadingProgress.style.width = progress + '%';
+                
+                if (progress === 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loadingScreen.classList.add('hidden');
+                        initMatrix();
+                        init3D();
+                    }, 500);
                 }
-            });
+            }, 100);
         });
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
+        // Matrix Background
+        function initMatrix() {
+            const canvas = document.getElementById('matrixCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
+            const matrixArray = matrix.split("");
+            
+            const fontSize = 10;
+            const columns = canvas.width / fontSize;
+            const drops = Array(Math.floor(columns)).fill(1);
+            
+            function draw() {
+                ctx.fillStyle = 'rgba(10, 10, 11, 0.04)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#00ff88';
+                ctx.font = fontSize + 'px JetBrains Mono';
+                
+                for (let i = 0; i < drops.length; i++) {
+                    const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+            
+            setInterval(draw, 35);
+            
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
+
+        // 3D Terminal
+        function init3D() {
+            const container = document.getElementById('terminal3d');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true });
+            
+            renderer.setSize(container.offsetWidth, container.offsetHeight);
+            renderer.setClearColor(0x000000, 0);
+            container.appendChild(renderer.domElement);
+            
+            // Create wireframe cube
+            const geometry = new THREE.BoxGeometry(1, 1, 1);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0x00ff88, 
+                wireframe: true 
+            });
+            const cube = new THREE.Mesh(geometry, material);
+            scene.add(cube);
+            
+            camera.position.z = 2;
+            
+            function animate() {
+                requestAnimationFrame(animate);
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        // Navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from nav items
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked nav item
+            event.target.classList.add('active');
+        }
+
+        // Terminal Controls
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
             } else {
-                navbar.classList.remove('scrolled');
+                document.exitFullscreen();
+            }
+        }
+
+        function minimizeTerminal() {
+            const terminal = document.querySelector('.terminal');
+            terminal.style.transform = terminal.style.transform === 'scale(0.1)' ? 'scale(1)' : 'scale(0.1)';
+        }
+
+        function closeTerminal() {
+            if (confirm('Are you sure you want to close the terminal?')) {
+                document.body.style.opacity = '0';
+                setTimeout(() => {
+                    alert('Thanks for visiting! Redirecting to LinkedIn...');
+                    window.open('https://linkedin.com/in/iudishkumar', '_blank');
+                }, 1000);
+            }
+        }
+
+        // Custom Cursor
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.querySelector('body::before');
+            document.documentElement.style.setProperty('--cursor-x', e.clientX + 'px');
+            document.documentElement.style.setProperty('--cursor-y', e.clientY + 'px');
+        });
+
+        // Add cursor position CSS variables
+        document.addEventListener('mousemove', (e) => {
+            document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
+            document.documentElement.style.setProperty('--mouse-y', e.clientY + 'px');
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey) {
+                switch(e.key) {
+                    case '1': showSection('about'); break;
+                    case '2': showSection('experience'); break;
+                    case '3': showSection('skills'); break;
+                    case '4': showSection('projects'); break;
+                    case '5': showSection('education'); break;
+                    case '6': showSection('contact'); break;
+                }
             }
         });
 
-        // Mobile menu toggle
-        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-        
-        mobileMenuToggle?.addEventListener('click', () => {
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            navLinks.style.position = 'absolute';
-            navLinks.style.top = '100%';
-            navLinks.style.left = '0';
-            navLinks.style.right = '0';
-            navLinks.style.background = 'white';
-            navLinks.style.flexDirection = 'column';
-            navLinks.style.padding = '1rem';
-            navLinks.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+        // Easter egg
+        let konamiCode = [];
+        const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
+
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.code);
+            if (konamiCode.length > konamiSequence.length) {
+                konamiCode.shift();
+            }
+            
+            if (konamiCode.join('') === konamiSequence.join('')) {
+                document.body.style.animation = 'glitch 0.5s infinite';
+                setTimeout(() => {
+                    document.body.style.animation = '';
+                    alert('🎮 Developer mode activated! You found the easter egg!');
+                }, 2000);
+            }
         });
-
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe elements for animation
-        document.querySelectorAll('.skill-category, .project-card, .testimonial-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
-        });
-
-        // Add typing animation to hero text
-        const heroText = document.querySelector('.hero-content h1');
-        if (heroText) {
-            const text = heroText.textContent;
-            heroText.textContent = '';
-            let i = 0;
-            const typeWriter = () => {
-                if (i < text.length) {
-                    heroText.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 100);
-                }
-            };
-            setTimeout(typeWriter, 500);
-        }
     </script>
+
+    <style>
+        /* Cursor position tracking */
+        body::before {
+            transform: translate(var(--mouse-x, 0), var(--mouse-y, 0));
+        }
+    </style>
 </body>
 </html>
