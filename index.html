@@ -1244,34 +1244,109 @@
             });
         }
 
-        // 3D Terminal
+        // 3D Terminal with Company Logos
         function init3D() {
             const container = document.getElementById('terminal3d');
             if (!container) return;
             
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, container.offsetWidth / container.offsetHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ alpha: true });
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
             
             renderer.setSize(container.offsetWidth, container.offsetHeight);
             renderer.setClearColor(0x000000, 0);
             container.appendChild(renderer.domElement);
             
-            // Create wireframe cube
-            const geometry = new THREE.BoxGeometry(1, 1, 1);
-            const material = new THREE.MeshBasicMaterial({ 
-                color: 0x00ff88, 
-                wireframe: true 
+            // Company logos URLs
+            const logoUrls = [
+                'images/cognizant.jpg', // Cognizant
+                'images/ibm.png', // IBM
+                'images/pwc.jpg', // PwC
+                'images/nttdata.jpg', // NTT Data
+                'images/sofiit.png', // SoFiiT
+                'images/tikr.jpeg' // Tikr
+            ];
+            
+            // Create cube geometry
+            const geometry = new THREE.BoxGeometry(1.2, 1.2, 1.2);
+            
+            // Create materials array with fallback colors
+            const materials = [];
+            const fallbackColors = [0x0066cc, 0x006699, 0xE5A02C, 0x005EB8, 0x00ff88, 0x0088ff];
+            
+            // Load textures with CORS handling
+            const textureLoader = new THREE.TextureLoader();
+            textureLoader.crossOrigin = 'anonymous';
+            
+            logoUrls.forEach((url, index) => {
+                try {
+                    const texture = textureLoader.load(
+                        url,
+                        // Success callback
+                        function(tex) {
+                            tex.needsUpdate = true;
+                            materials[index] = new THREE.MeshBasicMaterial({ 
+                                map: tex,
+                                side: THREE.DoubleSide
+                            });
+                        },
+                        // Progress callback
+                        undefined,
+                        // Error callback - use fallback color
+                        function(err) {
+                            console.log('Failed to load texture, using fallback color');
+                            materials[index] = new THREE.MeshBasicMaterial({ 
+                                color: fallbackColors[index],
+                                side: THREE.DoubleSide
+                            });
+                        }
+                    );
+                    
+                    // Initial material with color while texture loads
+                    materials[index] = new THREE.MeshBasicMaterial({ 
+                        color: fallbackColors[index],
+                        side: THREE.DoubleSide
+                    });
+                } catch (e) {
+                    // Fallback to colored faces if texture loading fails
+                    materials[index] = new THREE.MeshBasicMaterial({ 
+                        color: fallbackColors[index],
+                        side: THREE.DoubleSide
+                    });
+                }
             });
-            const cube = new THREE.Mesh(geometry, material);
+            
+            // Create mesh with materials
+            const cube = new THREE.Mesh(geometry, materials);
             scene.add(cube);
             
-            camera.position.z = 2;
+            // Add subtle lighting for better visibility
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.4);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
+            
+            // Add wireframe overlay for tech effect
+            const wireframeGeometry = new THREE.BoxGeometry(1.21, 1.21, 1.21);
+            const wireframeMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x00ff88, 
+                wireframe: true,
+                transparent: true,
+                opacity: 0.3
+            });
+            const wireframeCube = new THREE.Mesh(wireframeGeometry, wireframeMaterial);
+            scene.add(wireframeCube);
+            
+            camera.position.z = 2.5;
             
             function animate() {
                 requestAnimationFrame(animate);
-                cube.rotation.x += 0.01;
-                cube.rotation.y += 0.01;
+                cube.rotation.x += 0.005;
+                cube.rotation.y += 0.008;
+                wireframeCube.rotation.x = cube.rotation.x;
+                wireframeCube.rotation.y = cube.rotation.y;
                 renderer.render(scene, camera);
             }
             animate();
