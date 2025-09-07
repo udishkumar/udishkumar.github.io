@@ -7,7 +7,679 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111111;
+            --bg-glass: rgba(15, 15, 23, 0.8);
+            --accent-primary: #00ff88;
+            --accent-secondary: #0088ff;
+            --accent-purple: #8b5cf6;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --text-accent: #00ff88;
+            --border: rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 32px rgba(0, 255, 136, 0.1);
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+
+        /* Custom Cursor */
+        body::before {
+            content: '';
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent-primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.7;
+            transition: transform 0.1s ease;
+            transform: translate(var(--mouse-x, 0), var(--mouse-y, 0));
+        }
+
+        /* Matrix Background */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.05;
+        }
+
+        /* Terminal Container */
+        .terminal {
+            min-height: 100vh;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Terminal Header */
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px 20px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 12px 12px 0 0;
+            margin-bottom: 0;
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot:nth-child(1) { background: #ff5f56; }
+        .dot:nth-child(2) { background: #ffbd2e; }
+        .dot:nth-child(3) { background: #27c93f; }
+
+        .terminal-title {
+            color: var(--text-secondary);
+            font-size: 14px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .terminal-controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            color: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+
+        /* Terminal Body */
+        .terminal-body {
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            min-height: calc(100vh - 100px);
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Command Line Interface */
+        .cli-section {
+            margin-bottom: 30px;
+        }
+
+        .cli-prompt {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .prompt-symbol {
+            color: var(--accent-primary);
+            margin-right: 10px;
+        }
+
+        .prompt-path {
+            color: var(--accent-secondary);
+            margin-right: 10px;
+        }
+
+        .prompt-input {
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .cli-output {
+            margin-left: 20px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 40px;
+            margin-bottom: 40px;
+            align-items: start;
+        }
+
+        .hero-content {
+            animation: typewriter 2s steps(40) forwards;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            color: var(--accent-purple);
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* 3D Terminal */
+        .terminal-3d {
+            width: 300px;
+            height: 200px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Navigation Menu */
+        .nav-menu {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            background: rgba(0, 136, 255, 0.1);
+            border: 1px solid rgba(0, 136, 255, 0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: var(--accent-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(0, 136, 255, 0.2);
+            border-color: var(--accent-secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Experience Cards */
+        .experience-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .exp-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .exp-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+        }
+
+        .exp-card:hover {
+            transform: translateX(10px);
+            border-color: var(--accent-primary);
+            box-shadow: -5px 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .exp-title {
+            color: var(--text-primary);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .exp-company {
+            color: var(--accent-primary);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .exp-date {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .exp-achievements {
+            list-style: none;
+        }
+
+        .exp-achievements li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .exp-achievements li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+        }
+
+        /* Skills Matrix */
+        .skills-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-group {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .skill-group::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary), var(--accent-purple));
+            border-radius: 12px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .skill-group:hover::before {
+            opacity: 1;
+        }
+
+        .skill-title {
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--accent-primary);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: rgba(0, 255, 136, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* Project Cards */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .project-card:hover::after {
+            left: 100%;
+        }
+
+        .project-card:hover {
+            transform: scale(1.02);
+            border-color: var(--accent-primary);
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .project-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--bg-primary);
+        }
+
+        .project-title {
+            color: var(--text-primary);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tech-badge {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: var(--accent-purple);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .project-link {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            padding: 8px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: var(--accent-secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Contact Terminal */
+        .contact-terminal {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .contact-link {
+            width: 50px;
+            height: 50px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            transform: scale(1.1) rotate(5deg);
+            border-color: var(--accent-primary);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .terminal {
+                padding: 10px;
+            }
+            
+            .hero-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .terminal-3d {
+                display: none;
+            }
+            
+            .hero-title {
+                font-size: 36px;
+            }
+            
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-menu {
+                justify-content: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .glitch {
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+
+        /* Scroll hint */
+        .scroll-hint {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: var(--accent-primary);
+            font-size: 12px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-text {
+            color: var(--accent-primary);
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .loading-bar {
+            width: 300px;
+            height: 2px;
+            background: var(--border);
+            border-radius: 1px;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
     <!-- Loading Screen -->
@@ -54,9 +726,9 @@
                             <h1 class="hero-title glitch">UDISH KUMAR</h1>
                             <p class="hero-subtitle"># Software Engineer & Cloud Architect</p>
                             <p style="color: var(--text-secondary); margin: 20px 0; line-height: 1.6;">
-                                Building scalable cloud-native applications with 6+ years of expertise in microservices, 
-                                data platforms, and AI/ML integration. USC Computer Science graduate passionate about 
-                                creating impactful solutions.
+                                Software Engineer with 6+ years specializing in enterprise integrations, payment systems, and AI/RAG 
+                                architectures. USC Computer Science graduate with proven expertise in building scalable APIs and 
+                                microservices across AWS/GCP with deep experience in webMethods DBP and modern cloud-native solutions.
                             </p>
                             
                             <div class="hero-stats">
@@ -65,12 +737,12 @@
                                     <span class="stat-label">Revenue Impact</span>
                                 </div>
                                 <div class="stat-card">
-                                    <span class="stat-number">6+</span>
-                                    <span class="stat-label">Years Experience</span>
+                                    <span class="stat-number">85%</span>
+                                    <span class="stat-label">Reduction in Failures</span>
                                 </div>
                                 <div class="stat-card">
-                                    <span class="stat-number">70%</span>
-                                    <span class="stat-label">Performance Gains</span>
+                                    <span class="stat-number">$500K+</span>
+                                    <span class="stat-label">Cost Savings</span>
                                 </div>
                             </div>
                         </div>
@@ -168,6 +840,21 @@
                             <div class="exp-card">
                                 <div class="exp-header">
                                     <div>
+                                        <div class="exp-title">Software Engineer Intern</div>
+                                        <div class="exp-company">SoFiiT</div>
+                                    </div>
+                                    <div class="exp-date">May 2024 - Jul 2024</div>
+                                </div>
+                                <ul class="exp-achievements">
+                                    <li>Built MVVM-based workout-buddy app with Google & Firebase Analytics, improving user retention by 20%</li>
+                                    <li>Implemented OTP phone auth and .edu email restriction via Firebase Auth for 10K+ daily users</li>
+                                    <li>Integrated Firestore for offline-first sync, reducing data-sync latency by 40%</li>
+                                </ul>
+                            </div>
+
+                            <div class="exp-card">
+                                <div class="exp-header">
+                                    <div>
                                         <div class="exp-title">Lead Engineer</div>
                                         <div class="exp-company">NTT DATA</div>
                                     </div>
@@ -176,22 +863,22 @@
                                 <ul class="exp-achievements">
                                     <li>Architected FastAPI microservices on AWS replacing legacy ESB, improving API throughput by 60% and eliminating $150K/year licensing costs</li>
                                     <li>Built Operational Data Store (ODS) integrating ResourceGuru, Greenhouse, Zoho via Django + AWS, saving $75K/year</li>
-                                    <li>Mentored 5 junior engineers on cloud-native development, improving team delivery velocity by 30%</li>
+                                    <li>Implemented CI/CD pipelines with Git, Maven, Jenkins enabling bi-weekly releases and reducing post-release defects by 50%</li>
                                 </ul>
                             </div>
 
                             <div class="exp-card">
                                 <div class="exp-header">
                                     <div>
-                                        <div class="exp-title">Senior Associate</div>
+                                        <div class="exp-title">Senior Software Engineer</div>
                                         <div class="exp-company">PricewaterhouseCoopers LLP</div>
                                     </div>
                                     <div class="exp-date">Apr 2021 - Oct 2021</div>
                                 </div>
                                 <ul class="exp-achievements">
-                                    <li>Designed enterprise data platform framework on webMethods DBP, accelerating development delivery by 30% and saving $50K/year</li>
+                                    <li>Built middleware framework on webMethods DBP accelerating delivery by 30% and saving $50K/year</li>
                                     <li>Implemented encrypted API payloads and secure data flows, reducing security incidents by 40%</li>
-                                    <li>Deployed comprehensive OAuth 2.0 authentication, reducing configuration errors by 70% and saving 120 hours/year</li>
+                                    <li>Deployed comprehensive OAuth 2.0 automation, reducing configuration errors by 70% and saving 120 hours/year</li>
                                 </ul>
                             </div>
 
@@ -206,7 +893,7 @@
                                 <ul class="exp-achievements">
                                     <li>Delivered scalable data integration interfaces for major insurance client, improving system throughput by 45%</li>
                                     <li>Eliminated 98% SLA breaches, averting $80K in penalties through platform optimization</li>
-                                    <li>Implemented automated testing for 250+ REST services, increasing coverage by 30% and reducing manual QA by 90%</li>
+                                    <li>Automated testing for 250+ REST services, increasing coverage by 30% and reducing manual QA by 90%</li>
                                 </ul>
                             </div>
 
@@ -248,12 +935,30 @@
                                 <div class="skill-list">
                                     <span class="skill-tag">Python</span>
                                     <span class="skill-tag">Java</span>
-                                    <span class="skill-tag">JavaScript</span>
+                                    <span class="skill-tag">TypeScript/JavaScript</span>
                                     <span class="skill-tag">Kotlin</span>
                                     <span class="skill-tag">FastAPI</span>
-                                    <span class="skill-tag">Node.js</span>
+                                    <span class="skill-tag">Django</span>
+                                    <span class="skill-tag">Node.js/Express.js</span>
+                                    <span class="skill-tag">Spring Boot</span>
                                     <span class="skill-tag">React</span>
                                     <span class="skill-tag">Next.js</span>
+                                </div>
+                            </div>
+
+                            <div class="skill-group">
+                                <h3 class="skill-title">
+                                    <i class="fas fa-building"></i>
+                                    Enterprise Integration
+                                </h3>
+                                <div class="skill-list">
+                                    <span class="skill-tag">webMethods DBP</span>
+                                    <span class="skill-tag">Integration Server</span>
+                                    <span class="skill-tag">API Gateway</span>
+                                    <span class="skill-tag">Universal Messaging</span>
+                                    <span class="skill-tag">MuleSoft ESB</span>
+                                    <span class="skill-tag">OAuth 2.0</span>
+                                    <span class="skill-tag">X.509 Security</span>
                                 </div>
                             </div>
 
@@ -270,6 +975,24 @@
                                     <span class="skill-tag">CI/CD</span>
                                     <span class="skill-tag">GitHub Actions</span>
                                     <span class="skill-tag">Jenkins</span>
+                                    <span class="skill-tag">API Gateway</span>
+                                </div>
+                            </div>
+
+                            <div class="skill-group">
+                                <h3 class="skill-title">
+                                    <i class="fas fa-brain"></i>
+                                    AI/ML & RAG
+                                </h3>
+                                <div class="skill-list">
+                                    <span class="skill-tag">ChromaDB</span>
+                                    <span class="skill-tag">Vector Databases</span>
+                                    <span class="skill-tag">Claude API</span>
+                                    <span class="skill-tag">OpenAI GPT-5</span>
+                                    <span class="skill-tag">HuggingFace</span>
+                                    <span class="skill-tag">LlamaIndex</span>
+                                    <span class="skill-tag">Semantic Search</span>
+                                    <span class="skill-tag">RAG Systems</span>
                                 </div>
                             </div>
 
@@ -283,23 +1006,24 @@
                                     <span class="skill-tag">MongoDB</span>
                                     <span class="skill-tag">DynamoDB</span>
                                     <span class="skill-tag">Redis</span>
-                                    <span class="skill-tag">ChromaDB</span>
-                                    <span class="skill-tag">Vector Databases</span>
+                                    <span class="skill-tag">Firestore</span>
+                                    <span class="skill-tag">Node Cache</span>
                                 </div>
                             </div>
 
                             <div class="skill-group">
                                 <h3 class="skill-title">
-                                    <i class="fas fa-brain"></i>
-                                    AI/ML & Search
+                                    <i class="fas fa-mobile-alt"></i>
+                                    Mobile & APIs
                                 </h3>
                                 <div class="skill-list">
-                                    <span class="skill-tag">Claude API</span>
-                                    <span class="skill-tag">OpenAI</span>
-                                    <span class="skill-tag">LlamaIndex</span>
-                                    <span class="skill-tag">HuggingFace</span>
-                                    <span class="skill-tag">Vector Search</span>
-                                    <span class="skill-tag">RAG Systems</span>
+                                    <span class="skill-tag">Android SDK</span>
+                                    <span class="skill-tag">MVVM Architecture</span>
+                                    <span class="skill-tag">Firebase</span>
+                                    <span class="skill-tag">gRPC/Protocol Buffers</span>
+                                    <span class="skill-tag">REST</span>
+                                    <span class="skill-tag">GraphQL</span>
+                                    <span class="skill-tag">Razorpay</span>
                                 </div>
                             </div>
                         </div>
@@ -323,18 +1047,20 @@
                                     <div class="project-icon">🤖</div>
                                     <div>
                                         <div class="project-title">P.R.A.G.Y.A.</div>
-                                        <div style="color: var(--text-secondary); font-size: 14px;">Autonomous Learning Agent</div>
+                                        <div style="color: var(--text-secondary); font-size: 14px;">Agentic RAG Assistant with Intelligent Query Routing</div>
                                     </div>
                                 </div>
                                 <p class="project-description">
-                                    Built self-learning system using experience memory datastructures and pattern matching algorithms achieving 30% relevance improvement 
-                                    through strategy reuse; implemented dynamic threshold adaptation via performance-based feedback loops optimizing retrieval precision.
+                                    Architected distributed multi-source RAG system using ChromaDB vector storage, HuggingFace embeddings, and Claude API with autonomous routing. 
+                                    Implemented 7+ algorithms for detecting insufficient responses and modification queries with automatic enrichment, achieving 85% reduction in 
+                                    incomplete answers and sub-2s retrieval.
                                 </p>
                                 <div class="project-tech">
                                     <span class="tech-badge">Python</span>
                                     <span class="tech-badge">LlamaIndex</span>
                                     <span class="tech-badge">Claude API</span>
                                     <span class="tech-badge">ChromaDB</span>
+                                    <span class="tech-badge">Google CSE API</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://pragya.up.railway.app/" target="_blank" class="project-link">
@@ -347,19 +1073,20 @@
                                 <div class="project-header">
                                     <div class="project-icon">📊</div>
                                     <div>
-                                        <div class="project-title">CryptoBoard</div>
-                                        <div style="color: var(--text-secondary); font-size: 14px;">Real-time Crypto Dashboard</div>
+                                        <div class="project-title">CryptoBoard Dashboard</div>
+                                        <div style="color: var(--text-secondary); font-size: 14px;">Real-time Crypto Analytics Platform</div>
                                     </div>
                                 </div>
                                 <p class="project-description">
-                                    Sentiment analysis dashboard for cryptocurrency data from Reddit, NYTimes, Guardian. Designed modular Express.js backend 
-                                    with cache-aside pattern using Node Cache, cutting median API latency by 60%.
+                                    Designed modular Express.js backend with data structures optimization. Implemented cache-aside pattern with Node Cache (1h TTL) 
+                                    and scheduled fetches cutting median API latency by 60%. Parallelized paginated fetches with Promise.all + retries to cut 
+                                    processing time 50% and external API failures 90%.
                                 </p>
                                 <div class="project-tech">
                                     <span class="tech-badge">Node.js</span>
                                     <span class="tech-badge">Express.js</span>
-                                    <span class="tech-badge">Redis</span>
-                                    <span class="tech-badge">Railway</span>
+                                    <span class="tech-badge">Node Cache</span>
+                                    <span class="tech-badge">Railway/AWS</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://cryptoboard-frontend.onrender.com/" target="_blank" class="project-link">
@@ -373,18 +1100,20 @@
                                     <div class="project-icon">📱</div>
                                     <div>
                                         <div class="project-title">FindMyProduct</div>
-                                        <div style="color: var(--text-secondary); font-size: 14px;">Android Shopping App</div>
+                                        <div style="color: var(--text-secondary); font-size: 14px;">Android Shopping App with Backend</div>
                                     </div>
                                 </div>
                                 <p class="project-description">
-                                    Built Kotlin Android app using MVVM architecture, integrating eBay Finding API for real-time product search & wishlists. 
-                                    Deployed Node.js backend on GCP, reducing API response time by 25%.
+                                    Built Kotlin Android app (RecyclerView, MVVM) integrating eBay Finding API for real-time product search & wishlists. 
+                                    Deployed Node.js backend on GCP using eBay SDK, reducing API response time by 25%. Added MongoDB CRUD for wishlist 
+                                    management and Facebook SDK sharing to increase user engagement by 30%.
                                 </p>
                                 <div class="project-tech">
                                     <span class="tech-badge">Kotlin</span>
                                     <span class="tech-badge">MVVM</span>
                                     <span class="tech-badge">Node.js</span>
                                     <span class="tech-badge">MongoDB</span>
+                                    <span class="tech-badge">GCP</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://play.google.com/store/apps/details?id=com.udish.ebaysearch" target="_blank" class="project-link">
@@ -421,7 +1150,7 @@
                                 </div>
                                 <div style="color: var(--text-secondary); margin: 10px 0;">
                                     <i class="fas fa-map-marker-alt" style="color: var(--accent-primary); margin-right: 10px;"></i>
-                                    San Francisco, CA
+                                    Seattle, WA
                                 </div>
                             </div>
                             
@@ -451,6 +1180,200 @@
         Use navigation menu to explore different sections
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Loading Screen
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const loadingProgress = document.getElementById('loadingProgress');
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 30;
+                if (progress > 100) progress = 100;
+                loadingProgress.style.width = progress + '%';
+                
+                if (progress === 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loadingScreen.classList.add('hidden');
+                        initMatrix();
+                        init3D();
+                    }, 500);
+                }
+            }, 100);
+        });
+
+        // Matrix Background
+        function initMatrix() {
+            const canvas = document.getElementById('matrixCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
+            const matrixArray = matrix.split("");
+            
+            const fontSize = 10;
+            const columns = canvas.width / fontSize;
+            const drops = Array(Math.floor(columns)).fill(1);
+            
+            function draw() {
+                ctx.fillStyle = 'rgba(10, 10, 11, 0.04)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#00ff88';
+                ctx.font = fontSize + 'px JetBrains Mono';
+                
+                for (let i = 0; i < drops.length; i++) {
+                    const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+            
+            setInterval(draw, 35);
+            
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
+
+        // 3D Terminal
+        function init3D() {
+            const container = document.getElementById('terminal3d');
+            if (!container) return;
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true });
+            
+            renderer.setSize(container.offsetWidth, container.offsetHeight);
+            renderer.setClearColor(0x000000, 0);
+            container.appendChild(renderer.domElement);
+            
+            // Create wireframe cube
+            const geometry = new THREE.BoxGeometry(1, 1, 1);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0x00ff88, 
+                wireframe: true 
+            });
+            const cube = new THREE.Mesh(geometry, material);
+            scene.add(cube);
+            
+            camera.position.z = 2;
+            
+            function animate() {
+                requestAnimationFrame(animate);
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        // Navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from nav items
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked nav item
+            event.target.classList.add('active');
+        }
+
+        // Terminal Controls
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        function minimizeTerminal() {
+            const terminal = document.querySelector('.terminal');
+            terminal.style.transform = terminal.style.transform === 'scale(0.1)' ? 'scale(1)' : 'scale(0.1)';
+        }
+
+        function closeTerminal() {
+            if (confirm('Are you sure you want to close the terminal?')) {
+                document.body.style.opacity = '0';
+                setTimeout(() => {
+                    alert('Thanks for visiting! Redirecting to LinkedIn...');
+                    window.open('https://linkedin.com/in/iudishkumar', '_blank');
+                }, 1000);
+            }
+        }
+
+        // Custom Cursor
+        document.addEventListener('mousemove', (e) => {
+            document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
+            document.documentElement.style.setProperty('--mouse-y', e.clientY + 'px');
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey) {
+                switch(e.key) {
+                    case '1': 
+                        e.preventDefault();
+                        showSection('about');
+                        break;
+                    case '2': 
+                        e.preventDefault();
+                        showSection('experience');
+                        break;
+                    case '3': 
+                        e.preventDefault();
+                        showSection('skills');
+                        break;
+                    case '4': 
+                        e.preventDefault();
+                        showSection('projects');
+                        break;
+                    case '5': 
+                        e.preventDefault();
+                        showSection('contact');
+                        break;
+                }
+            }
+        });
+
+        // Easter egg
+        let konamiCode = [];
+        const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
+
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.code);
+            if (konamiCode.length > konamiSequence.length) {
+                konamiCode.shift();
+            }
+            
+            if (konamiCode.join('') === konamiSequence.join('')) {
+                document.body.style.animation = 'glitch 0.5s infinite';
+                setTimeout(() => {
+                    document.body.style.animation = '';
+                    alert('🎮 Developer mode activated! You found the easter egg!');
+                }, 2000);
+            }
+        });
+    </script>
 </body>
 </html>
